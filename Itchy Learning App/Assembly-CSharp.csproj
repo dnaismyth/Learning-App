@@ -78,7 +78,9 @@
      <Compile Include="Assets\Scripts\Menus\GameChoice.cs" />
      <Compile Include="Assets\Scripts\Menus\GameDisplay.cs" />
      <Compile Include="Assets\Scripts\Menus\Itchy_Controller.cs" />
+     <Compile Include="Assets\Scripts\Menus\ItemObject.cs" />
      <Compile Include="Assets\Scripts\Menus\MainMenuScript.cs" />
+     <Compile Include="Assets\Scripts\Menus\MakeGameObject.cs" />
      <Compile Include="Assets\Scripts\Menus\PracticeModeScript.cs" />
      <Compile Include="Assets\Scripts\Menus\SkyBG.cs" />
      <Compile Include="Assets\Scripts\ResizePanel.cs" />
