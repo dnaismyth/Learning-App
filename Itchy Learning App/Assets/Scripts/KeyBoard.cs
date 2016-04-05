@@ -87,8 +87,8 @@ public class KeyBoard : MonoBehaviour {
 		int numCols = 12;
 		int InDeX = 0;
 		int numButtons = 26;
-		float nextUse = 0f;
-		float delay = 5f;
+		//float nextUse = 0f;
+		//float delay = 5f;
 		/**********************************/
 		Texture[] display;//Holds letter images that will be displayed on the keyboard
 		//Checks whether picture letters or font letters are being displayed

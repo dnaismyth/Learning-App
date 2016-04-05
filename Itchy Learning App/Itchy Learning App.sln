@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 
 Project("{59FA5793-8FD6-EFAF-C6EB-38A7875BFC7C}") = "Itchy Learning App", "Assembly-CSharp.csproj", "{9F7CE082-4AA0-CD58-50C4-250558C11BCD}"
 EndProject
+Project("{59FA5793-8FD6-EFAF-C6EB-38A7875BFC7C}") = "Itchy Learning App", "Assembly-CSharp-Editor.csproj", "{57A9B104-93BA-BCC4-84C4-5B6ACDF16389}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{9F7CE082-4AA0-CD58-50C4-250558C11BCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F7CE082-4AA0-CD58-50C4-250558C11BCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F7CE082-4AA0-CD58-50C4-250558C11BCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57A9B104-93BA-BCC4-84C4-5B6ACDF16389}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57A9B104-93BA-BCC4-84C4-5B6ACDF16389}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57A9B104-93BA-BCC4-84C4-5B6ACDF16389}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57A9B104-93BA-BCC4-84C4-5B6ACDF16389}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

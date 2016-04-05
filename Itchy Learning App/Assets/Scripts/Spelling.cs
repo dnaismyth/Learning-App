@@ -155,8 +155,8 @@ public class Spelling : MonoBehaviour {
 		int numCols = 12;
 		int InDeX = 0;
 		int numButtons = 26;
-		float nextUse = 0f;
-		float delay = 5f;
+		//float nextUse = 0f;
+		//float delay = 5f;
 		//*****************************************************************************************
 		Rect r = new Rect (0, 0, buttonSizeWidth, buttonSizeHeight); // rect for picture cues
 		Rect r2 = new Rect (0, 0, buttonSizeWidth, buttonSizeHeight);

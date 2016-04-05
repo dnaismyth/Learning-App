@@ -2,7 +2,6 @@
 using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using UnityEngine.UI;
 
 //[RequireComponent(typeof(AudioSource))]
 public class InitialSounds: MonoBehaviour {
@@ -131,7 +130,7 @@ public class InitialSounds: MonoBehaviour {
         for (int i = 0; i <= 25; i++)
         {
             int letterId = PlayerPrefs.GetInt("initial_letter" + i);
-            if(letterId != null && letterId != -1)  // user has selected specific letters to be chosen, therefore default will not be used (all letters)
+            if(/*letterId != null &&*/ letterId != -1)  // user has selected specific letters to be chosen, therefore default will not be used (all letters)
             {
                 Debug.Log("CURRENT LETTER ID CHOSEN: " + letterId);
                 usable[letterId] = true;
@@ -201,7 +200,7 @@ public class InitialSounds: MonoBehaviour {
             b4 = GUI.Button(new Rect(Screen.width / 1.6f, Screen.height / 1.5f, 150, 150), fontLetters[letterOptions[3]]);
         }
 
-        b5 = GUI.Button(new Rect(1200, 575, 150, 100), skip);
+        //b5 = GUI.Button(new Rect(1200, 575, 150, 100), skip);
         //Creates Word Image
         GUI.skin = imageSkin;
         imageSkin.button.normal.background = (Texture2D)temp;

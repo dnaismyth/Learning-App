@@ -3,13 +3,13 @@ using System.Collections;
 
 public class selectAll : MonoBehaviour {
 	public Color highlightColor = Color.white;
-	[SerializeField] private letterSettings settings;
+	//[SerializeField] private letterSettings settings;
 	static bool selectAllLetters = true;
 
 
 	void Start()
 	{
-		settings = GetComponent<letterSettings> ();
+		//settings = GetComponent<letterSettings> ();
 	}
 	
 	public void OnMouseEnter()

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Itchy_Controller : MonoBehaviour {
 
@@ -40,7 +41,7 @@ public class Itchy_Controller : MonoBehaviour {
             gameO.GetComponent<Animator>().enabled = false; // stop itchy from talking
             if(Camera.main.orthographicSize < 0) // once the camera has zoomed in enough, divert to the island menu
             {
-                Application.LoadLevel(6);
+                SceneManager.LoadScene(6);
             }
         }
     }

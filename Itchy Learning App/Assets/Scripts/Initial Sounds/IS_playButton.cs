@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class IS_playButton : MonoBehaviour {
 
@@ -43,11 +44,11 @@ public class IS_playButton : MonoBehaviour {
         {
             if (PlayerPrefs.GetInt("currentGame") != 0) // change this
             {
-                Application.LoadLevel(PlayerPrefs.GetInt("currentGame")); // corresponds to initial sounds game
+                SceneManager.LoadScene(PlayerPrefs.GetInt("currentGame")); // corresponds to initial sounds game
             }
             else
             {
-                Application.LoadLevel("Game");
+                SceneManager.LoadScene("Game");
             }
             transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
         }

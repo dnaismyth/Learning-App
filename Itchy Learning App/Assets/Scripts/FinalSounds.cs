@@ -5,9 +5,18 @@ using System.Collections.Generic;
 
 //[RequireComponent(typeof(AudioSource))]
 public class FinalSounds: MonoBehaviour {
-	
-	//Arrays to hold Picture and Letter Cues
-	public Texture[]pictureLetters;
+
+    public GUISkin skin;
+    public GUISkin imageSkin;
+    public Texture2D buttonWrong;  // hold the texture for wrong button
+    public Texture2D buttonCorrect; // hold the texture image for correct
+    public Texture2D buttonNormal;  // hold texture for normal appearance
+    public Texture2D buttonActive;
+    public bool isWrong = false;    // use these to check if the button has updated its appearance 
+    public bool isRight = false;
+    public bool userChoices = false;    // use this to check if the user has selected some letters to handle error   
+                                        //Arrays to hold Picture and Letter Cues
+    public Texture[]pictureLetters;
 	public Texture[]fontLetters;
 	
 	//For Word Storage
@@ -114,40 +123,72 @@ public class FinalSounds: MonoBehaviour {
 			b5=false;
 			SetRandom();
 		}
-		//Option Buttons b1-b4
-		if (itchyMode == true) {
-			b1 = GUI.Button (new Rect (125, 0, 75, 75), pictureLetters[letterOptions[0]]);
-			b2 = GUI.Button (new Rect (399, 0, 75, 75), pictureLetters[letterOptions[1]]);
-			b3 = GUI.Button (new Rect (125, 200, 75, 75), pictureLetters[letterOptions[2]]);
-			b4 = GUI.Button (new Rect (399, 200, 75,75), pictureLetters[letterOptions[3]]);
+
+        GUI.skin = skin;
+        skin.button.normal.background = buttonNormal;
+        skin.button.hover.background = buttonActive;
+
+        //Option Buttons b1-b4
+        if (itchyMode == true) {
+			b1 = GUI.Button (new Rect (Screen.width / 4.1f, Screen.height / 10, 150, 150), pictureLetters[letterOptions[0]]);
+			b2 = GUI.Button (new Rect (Screen.width / 1.6f, Screen.height / 10, 150, 150), pictureLetters[letterOptions[1]]);
+			b3 = GUI.Button (new Rect (Screen.width / 4.1f, Screen.height / 1.5f, 150, 150), pictureLetters[letterOptions[2]]);
+			b4 = GUI.Button (new Rect (Screen.width / 1.6f, Screen.height / 1.5f, 150, 150), pictureLetters[letterOptions[3]]);
 		} else {
-			b1 = GUI.Button (new Rect (340, 25, 125, 125), fontLetters[letterOptions[0]]);
-			b2 = GUI.Button (new Rect (855, 25, 125, 125), fontLetters[letterOptions[1]]);
-			b3 = GUI.Button (new Rect (340, 535, 125, 125), fontLetters[letterOptions[2]]);
-			b4 = GUI.Button (new Rect (855, 540, 125, 125), fontLetters[letterOptions[3]]);
+			b1 = GUI.Button (new Rect (Screen.width / 4.1f, Screen.height / 10, 150, 150), fontLetters[letterOptions[0]]);
+			b2 = GUI.Button (new Rect (Screen.width / 1.6f, Screen.height / 10, 150, 150), fontLetters[letterOptions[1]]);
+			b3 = GUI.Button (new Rect (Screen.width / 4.1f, Screen.height / 1.5f, 150, 150), fontLetters[letterOptions[2]]);
+			b4 = GUI.Button (new Rect (Screen.width / 1.6f, Screen.height / 1.5f, 150, 150), fontLetters[letterOptions[3]]);
 		}
-		
-		b5 = GUI.Button (new Rect (520, 320, 75, 50), skip);
-		//Creates Word Image
-		b6 = GUI.Button(new Rect(200, 40, 200, 200), replay);
-		GUI.DrawTexture(new Rect(200, 40, 200, 200), temp, ScaleMode.ScaleToFit, true, 1.0F);
-		//Creates surrounding border
-		GUI.DrawTexture(new Rect(200, 40, 200, 200), border, ScaleMode.ScaleToFit, true, 1.0F);
-	}
+
+        //b5 = GUI.Button (new Rect (520, 320, 75, 50), skip);
+        GUI.skin = imageSkin;
+        imageSkin.button.normal.background = (Texture2D)temp;
+        imageSkin.button.hover.background = null;
+        if (isWrong == true)
+        {
+            imageSkin.button.normal.background = buttonWrong;
+            StartCoroutine(waitForSeconds(1.5f));
+        }
+        else if (isRight == true)
+        {
+            imageSkin.button.normal.background = buttonCorrect;
+            StartCoroutine(waitForSeconds(1.5f));
+        }
+        b6 = GUI.Button(new Rect(Screen.width / 2.4f, Screen.height / 2.9f, 200, 200), replay);
+
+        //GUI.DrawTexture(new Rect(Screen.width/2.5f, Screen.height/3.5f, 200, 200), temp, ScaleMode.ScaleToFit, true, 1.0F);
+        //Creates surrounding border
+        GUI.DrawTexture(new Rect(Screen.width / 2.4f, Screen.height / 2.9f, 200, 200), border, ScaleMode.ScaleToFit, true, 1.0F);
+    }
 
     void initializeUsable()
     {
         //Debug current letters player has picked
         for (int i = 0; i <= 25; i++)
         {
-            int letterId = PlayerPrefs.GetInt("final_letter" + i);
-            if (letterId != null && letterId != -1)
+            int letterId = PlayerPrefs.GetInt("initial_letter" + i);
+            if (/*letterId != null &&*/ letterId != -1)  // user has selected specific letters to be chosen, therefore default will not be used (all letters)
             {
                 Debug.Log("CURRENT LETTER ID CHOSEN: " + letterId);
                 usable[letterId] = true;
+                userChoices = true;
+                Debug.Log(usable[i]);
+            }
+            else if (userChoices == false)
+            {
+                usable[i] = true;      // if user has not selected specific letters, set them all to be used as default
             }
 
+
         }
+    }
+
+    IEnumerator waitForSeconds(float sec)
+    {
+        yield return new WaitForSeconds(sec);
+        isWrong = false;
+        isRight = false;
     }
 
     //Sets Random Location in Word List for the selected word
@@ -317,19 +358,22 @@ public class FinalSounds: MonoBehaviour {
 			playAud.Stop ();
 		
 		if (letterOptions [buttonClicked - 1] == indeX) {
-			congrat=1;
+            isRight = true;
+            congrat = 1;
 			respons = true;
 			rounds=rounds-1;
 			//if rounds=0 escape
 		} else {
-			congrat=2;
+            isWrong = true;
+            congrat = 2;
 			respons = false;
 			score=1;
 		}
 	}
-	
-	//Plays Sounds
-	void playSound(AudioClip sound, float vol, int version)
+
+
+    //Plays Sounds
+    void playSound(AudioClip sound, float vol, int version)
 	{
 		//Assigns an audio source	
 		playAud = gameObject.AddComponent<AudioSource> ();

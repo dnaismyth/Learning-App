@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class playButton : MonoBehaviour
 {
@@ -41,11 +42,11 @@ public class playButton : MonoBehaviour
         {
             if (PlayerPrefs.GetInt("currentGame") != 0)
             {
-                Application.LoadLevel(PlayerPrefs.GetInt("currentGame")); // corresponds to game previously being played
+                SceneManager.LoadScene(PlayerPrefs.GetInt("currentGame")); // corresponds to game previously being played
             }
             else
            // {
-                Application.LoadLevel("Game");
+                SceneManager.LoadScene("Game");
            // }
             transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
         }

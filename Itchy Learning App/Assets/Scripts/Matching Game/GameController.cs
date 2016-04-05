@@ -22,7 +22,7 @@ public class GameController : MonoBehaviour {
     private List<AudioClip> userChoiceSounds = new List<AudioClip>();
 	private List<cardBack> chosenPics = new List<cardBack> ();
 	private List<cardBack> chosenLets = new List<cardBack>();
-    [SerializeField] private letterSettings userSettings; // create an instance of letterSettings so we can retrieve the list of id's to be added
+    //[SerializeField] private letterSettings userSettings; // create an instance of letterSettings so we can retrieve the list of id's to be added
 	private selectAll pickAll = new selectAll (); // initialize an instance for the selectAll class
     // Values used for positioning
     public int gridRows = 3; 
@@ -47,7 +47,7 @@ public class GameController : MonoBehaviour {
 		//print ("Test -1 setting: " + PlayerPrefs.GetInt ("letter20"));
         //print("list size: " + userSettings.getListSize());
         getUserChoices();
-        userSettings = GetComponent<letterSettings>();
+        //userSettings = GetComponent<letterSettings>();
         createLetters();
         createPictures();
         playAudio = GetComponent<AudioSource>();

@@ -4,13 +4,13 @@ using System.Collections;
 public class DragObject : MonoBehaviour
 {
     private Vector3 screenPoint;
-    private Vector3 offset;
+    //private Vector3 offset;
 
     void OnMouseDown()
     {
         screenPoint = Camera.main.WorldToScreenPoint(gameObject.transform.position);
 
-        offset = gameObject.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, screenPoint.y, screenPoint.z));
+       // offset = gameObject.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, screenPoint.y, screenPoint.z));
 
     }
 

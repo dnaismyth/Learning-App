@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class letterButton : MonoBehaviour
 {
@@ -28,11 +29,11 @@ public class letterButton : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("currentGame") != 0)
         {
-            Application.LoadLevel(6);       //redirect to initialsoundssetting screen, if have time, change this later
+           SceneManager.LoadScene(6);       //redirect to initialsoundssetting screen, if have time, change this later
         }
         else
         {
-            Application.LoadLevel("Settings");
+            SceneManager.LoadScene("Settings");
         }
         transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
     }

@@ -9,7 +9,7 @@ public class ImageController : MonoBehaviour
     public AudioClip[] wordSounds; // instantiate an array of sounds corresponding to their images
     private int rand;
     AudioSource playAudio;
-    public CatchController cc = new CatchController(); // use this to access whether or not the game is currently in progress
+    public CatchController cc; // use this to access whether or not the game is currently in progress
 
     // Use this for initialization
     void Start()

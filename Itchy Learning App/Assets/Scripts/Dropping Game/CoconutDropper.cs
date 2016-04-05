@@ -9,7 +9,7 @@ public class CoconutDropper : MonoBehaviour {
 	public AudioClip[] letterSounds; // store each letter sound
     [SerializeField]public string[] letters;
 	private List<SpawnCoconuts> allCoconuts = new List<SpawnCoconuts>();
-    AudioSource playAudio;
+    //AudioSource playAudio;
     private int rand;
     private bool dropping = true;
 	int spawnMin = 6; // min time of dropper
@@ -17,23 +17,23 @@ public class CoconutDropper : MonoBehaviour {
     private string imageName;
     public ImageController currImage; // instantiate this in inspector
     private int[] index;
-    private CatchController cc = new CatchController();
+    public CatchController cc;
     private int percent = 0;
     private int rand2 = 0;
-    private Rigidbody2D rb;
+    //private Rigidbody2D rb;
 
 
     // Use this for initialization
     // Instantiate all of the prefabs off screen, and then change the position to begin height of dropper
     void Awake(){
-        rb = GetComponent<Rigidbody2D>();
+        //rb = GetComponent<Rigidbody2D>();
 		Vector3 position = this.transform.position;
 		position.y = 6;
 		this.transform.position = position;
 	}
 
 	void Start () {
-        playAudio = GetComponent<AudioSource>();
+        //playAudio = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame, change the position of the dropper to varying x-values
@@ -118,7 +118,7 @@ public class CoconutDropper : MonoBehaviour {
                 allCoconuts[rand].GetComponent<Rigidbody2D>().velocity = new Vector2(0, -10000);
 
             }
-            else // 70% chance of dropping a letter in the current image being shown
+            else if (percent >= 30)// 70% chance of dropping a letter in the current image being shown
             {
                 rand2 = Random.Range(0, 3);
                 Instantiate(allCoconuts[index[rand2]], transform.position, Quaternion.identity);

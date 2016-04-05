@@ -11,13 +11,13 @@ public class CatchController : MonoBehaviour
     private GameImage imageClass = new GameImage(0, "l", false); // use this to create imageClass objects to create bool checks for letters being collected
     private GameImage[] imageObjects;
     private string currentLetter;
-    private GUIStyle style = new GUIStyle(); //create a new variable
-    private GUIStyle style2 = new GUIStyle(); 
+    private GUIStyle style; //create a new variable
+    private GUIStyle style2; 
     private int pos = Screen.width / 9; // holds the position of the font
     private string collected = ""; // a string to hold the current letters that are collected
     private string imageName; // hold the name of the image we are trying to match the letters to 
     public ImageController currImage;
-    private Dictionary<string, bool> checkCaught = new Dictionary<string, bool>(); // hold the letter and bool to check if it has been printed
+    //private Dictionary<string, bool> checkCaught = new Dictionary<string, bool>(); // hold the letter and bool to check if it has been printed
     public int lives = 3; // set their lives to 3, we can change this later if we allow the user to decide the amount of lives (difficulty) etc.. 
     private int gameType; // use this for now to choose the game type (in order spelling or random) will change to player prefs later
     private bool isPlaying = false; // use this to make game pause etc.
@@ -25,10 +25,11 @@ public class CatchController : MonoBehaviour
     private string startMessage; // hold a start message in here after the count down is finished
     private bool countActive = true;
     public AudioClip beep;
-    public CoconutDropper dropper = new CoconutDropper(); // create a CoconutDropper instance to use to call the spawn function
+    public CoconutDropper dropper; // create a CoconutDropper instance to use to call the spawn function
     AudioSource playAudio;
     public bool pause = false;
     private bool fontReady = false;
+    String pauseMessage = "";
 
 
 
@@ -71,6 +72,8 @@ public class CatchController : MonoBehaviour
 
     void Awake()
     {
+        style = new GUIStyle();
+        style2 = new GUIStyle();
         playAudio = GetComponent<AudioSource>();
         gameType = PlayerPrefs.GetInt("droppingOptions");
     }
@@ -237,7 +240,7 @@ public class CatchController : MonoBehaviour
 
         style.fontSize = 55;
         GUI.Label(new Rect(Screen.width / 1.08f, Screen.height/30.0f, 120, 30), lives.ToString(), style); // display the letter based on it's index key within the word
-        if (fontReady == true)
+       if (fontReady == true)
         {
 
             for (int i = 0; i < imageObjects.Length; i++)
@@ -258,9 +261,10 @@ public class CatchController : MonoBehaviour
         }
 
 
-        String pauseMessage = "paused";
         if (pause == true)
         {
+            pauseMessage = "paused";
+
             GUI.skin.font = font;
             style2.fontSize = 60;
             style2.normal.textColor = Color.white;
@@ -296,9 +300,9 @@ public class CatchController : MonoBehaviour
     {
         if (lives == 0)
         {
-            dropper.pauseDropper();
+           // dropper.pauseDropper();
             lives = 0;
-            isPlaying = false;
+            //isPlaying = false;
             Debug.Log("You lose"); // change this later, pause the game or redirect to a new screen asking if they want to play again
         }
     }

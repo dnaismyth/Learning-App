@@ -4,8 +4,8 @@ using System.Collections;
 public class PauseButton : MonoBehaviour {
 
     public Color highlight;
-    public CatchController cc = new CatchController();
-    private bool touched = false; // hold whether or not the button has already been touched
+    public CatchController cc;
+    //private bool touched = false; // hold whether or not the button has already been touched
     SpriteRenderer sprite;
 
     void Awake()

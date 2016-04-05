@@ -189,7 +189,7 @@ public class VowelSounds: MonoBehaviour {
         for (int i = 0; i <= 4; i++)
         {
             int letterId = PlayerPrefs.GetInt("vowel_letter" + i);
-            if (letterId != null && letterId != -1)
+            if (/*letterId != null &&*/ letterId != -1)
             {
                 Debug.Log("CURRENT LETTER ID CHOSEN: " + letterId);
                 usable[letterId] = true;
