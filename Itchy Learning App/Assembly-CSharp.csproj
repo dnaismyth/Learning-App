@@ -57,6 +57,7 @@
      <Compile Include="Assets\Scripts\Dropping Game\ImageController.cs" />
      <Compile Include="Assets\Scripts\Dropping Game\PauseButton.cs" />
      <Compile Include="Assets\Scripts\Dropping Game\SpawnCoconuts.cs" />
+     <Compile Include="Assets\Scripts\Dropping Game\WinOverlay.cs" />
      <Compile Include="Assets\Scripts\FinalSounds.cs" />
      <Compile Include="Assets\Scripts\Initial Sounds\IS_playButton.cs" />
      <Compile Include="Assets\Scripts\Initial Sounds\initialSounds_settingsMouse.cs" />
@@ -76,6 +77,7 @@
      <Compile Include="Assets\Scripts\Menus\CloudFlow.cs" />
      <Compile Include="Assets\Scripts\Menus\FogScript.cs" />
      <Compile Include="Assets\Scripts\Menus\GameChoice.cs" />
+     <Compile Include="Assets\Scripts\Menus\GameDescriptions.cs" />
      <Compile Include="Assets\Scripts\Menus\GameDisplay.cs" />
      <Compile Include="Assets\Scripts\Menus\Itchy_Controller.cs" />
      <Compile Include="Assets\Scripts\Menus\ItemObject.cs" />
@@ -90,7 +92,6 @@
      <Compile Include="Assets\Scripts\settingsRemoveButton.cs" />
      <None Include="Assets\Sounds\Words\replace phonics from here.txt" />
      <None Include="Assets\Fonts\Jupiter\LICENSE.txt" />
-     <None Include="Assets\Materials\UI-Default-No-Alpha.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

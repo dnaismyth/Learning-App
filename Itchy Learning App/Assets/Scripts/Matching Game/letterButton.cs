@@ -29,7 +29,7 @@ public class letterButton : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("currentGame") != 0)
         {
-           SceneManager.LoadScene(6);       //redirect to initialsoundssetting screen, if have time, change this later
+          SceneManager.LoadScene(6);       //redirect to initialsoundssetting screen, if have time, change this later
         }
         else
         {

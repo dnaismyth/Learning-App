@@ -29,7 +29,10 @@ public class CatchController : MonoBehaviour
     AudioSource playAudio;
     public bool pause = false;
     private bool fontReady = false;
+    private bool showCanvas = false;
     String pauseMessage = "";
+    public GameObject menu; // Winning screen menu
+    public AudioClip congratulations;   // sound to play when the user has won the game
 
 
 
@@ -38,6 +41,8 @@ public class CatchController : MonoBehaviour
     {
         yield return new WaitForSeconds(wait);
         playAudio.PlayOneShot(currImage.wordSounds[currImage.getIndex()]); // play the corresponding letter sound on drop
+        yield return new WaitForSeconds(wait);
+        playAudio.PlayOneShot(congratulations); // then play the congratulations message
 
     }
 
@@ -57,12 +62,14 @@ public class CatchController : MonoBehaviour
                 Debug.Log("You have won"); // will have to change this later to randomize a new image for a user to spell
                 pauseGame(); // pause the game for now, will include Jeff's winning screen
                 StartCoroutine(Wait(1.5f)); // wait 2 seconds and then replay the word they have just spelt
-
+                menu.SetActive(true);
+                fontReady = false; // hide font//
             }
 
         }
 
     }
+
 
     void Start()
     {
@@ -72,10 +79,16 @@ public class CatchController : MonoBehaviour
 
     void Awake()
     {
+        menu.SetActive(false); // start with the winning screen set to false (not showing)
         style = new GUIStyle();
         style2 = new GUIStyle();
         playAudio = GetComponent<AudioSource>();
         gameType = PlayerPrefs.GetInt("droppingOptions");
+    }
+
+    public bool getShowCanvas()
+    {
+        return showCanvas;
     }
 
     public bool getIsPlaying()

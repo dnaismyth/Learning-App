@@ -36,9 +36,10 @@ public class GameController : MonoBehaviour {
     private cardBack firstReveal; // store the first card clicked
     private cardBack secondReveal; // store the second card clicked
     static bool allow = true; // boolean to store whether or not a user is allowed to pick the card they have chosen (ex, not allowed to pick a letter card first)
-
+    //private bool won = false;
     private int score = 0; // using to debug for now, maybe later use to check if score == userChoices.Length then they have won the game.. show animation
-
+    public GameObject menu; // game object to hold winning screen / back to menu or play again buttons
+    public AudioClip winningCongrats; // sound played after the user has won the game
     AudioSource playAudio;
 
 	
@@ -229,6 +230,8 @@ public class GameController : MonoBehaviour {
             if (score == userChoicePictures.Count)
             {
                 Debug.Log("u win"); //
+                //won = true;
+                menu.SetActive(true);
             }
         }
         else
@@ -273,9 +276,9 @@ public class GameController : MonoBehaviour {
 				posXX = startPosPictures.x + ((i) % gridCols) * offsetX/(1.2f);
 				posYY = startPosPictures.y + (int)Mathf.Floor((float)(i) / gridCols) * -offsetY/(1.2f);
 			}
-            if (inputPictures.Count % 5 != 0)
+            if (inputPictures.Count % 6 != 0)
             {
-                // work on this, change position of the last few cards if %5 != 0
+                
             }
 
 			inputPictures[i].transform.position = new Vector3(posXX, posYY, startPosPictures.z); // create a new position based on this offset for the newly instatiated card
@@ -310,7 +313,20 @@ public class GameController : MonoBehaviour {
 
 	void onDestroy(){
 		PlayerPrefs.Save ();
+        menu.SetActive(false);
 	}
     
-	
+    void Awake()
+    {
+        menu.SetActive(false); // start with the winning screen set to false (not showing)
+        PlayerPrefs.SetInt("currentGame", 0);
+        PlayerPrefs.Save();
+
+    }
+
+    void Update()
+    {
+      
+    }
+
 }
