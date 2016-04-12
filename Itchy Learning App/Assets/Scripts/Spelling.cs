@@ -4,8 +4,12 @@ using UnityEngine.SceneManagement;
 
 public class Spelling : MonoBehaviour {
 
-	//Arrays to hold Picture and Letter Cues
-	public Texture[]pictureLetters;
+    public GUISkin imageSkin;
+    public Texture2D buttonWrong;  // hold the texture for wrong button
+    public Texture2D buttonCorrect; // hold the texture image for correct
+    public bool isWrong = false;    // use these to check if the button has updated its appearance 
+    public bool isRight = false;                          //Arrays to hold Picture and Letter Cues
+    public Texture[]pictureLetters;
 	public Texture[]fontLetters;
 	//Arrays to hold Words
 	public Texture[]Word;
@@ -96,56 +100,61 @@ public class Spelling : MonoBehaviour {
 
 
 	void OnGUI() {
-		b1 = GUI.Button (new Rect (480, 300, 75, 50), skip);
+		//b1 = GUI.Button (new Rect (480, 300, 75, 50), skip);
 		//Hint button
-		b3 = GUI.Button (new Rect (0, 0, 75, 50), hints);
+		//b3 = GUI.Button (new Rect (0, 0, 75, 50), hints);
 
 		if (level == 1) {
-			//Creates Word Image
-			b2 = GUI.Button(new Rect(200, 0, 200, 200), replay);
-			GUI.DrawTexture(new Rect(200, 0, 200, 130), Word[ranDisplay]);
-
-			GUI.DrawTexture(new Rect(195, 135, 100, 65), let1);
-			GUI.DrawTexture(new Rect(260, 135, 65, 65), let2);
-			GUI.DrawTexture(new Rect(325, 135, 65, 65), let3);
+            //Creates Word Image
+            /*b2 = GUI.Button(new Rect(200, 0, 200, 200), replay);
+			GUI.DrawTexture(new Rect(200, 0, 200, 130), Word[ranDisplay]);*/
+            //Creates Word Image
+            
+            b2 = GUI.Button(new Rect(Screen.width / 2.6f, 15, 250, 250), replay);
+            GUI.DrawTexture(new Rect(Screen.width / 2.5f, 150, 100, 65), let1);
+			GUI.DrawTexture(new Rect(Screen.width / 2.2f, 150, 65, 65), let2);
+			GUI.DrawTexture(new Rect(Screen.width / 1.9f, 150, 65, 65), let3);
 		}
 		else if (level == 2) {
 			if(three==1||Hinted)
 			{
-				//Creates Word Image
-				b2 = GUI.Button(new Rect(200, 0, 200, 200), replay);
-				GUI.DrawTexture(new Rect(200, 0, 200, 130), Word[ranDisplay]);
-				
-				GUI.DrawTexture(new Rect(195, 135, 65, 65), let1);
-				GUI.DrawTexture(new Rect(260, 135, 65, 65), let2);
-				GUI.DrawTexture(new Rect(325, 135, 65, 65), let3);
+                //Creates Word Image
+           
+               
+                b2 = GUI.Button(new Rect(Screen.width / 2.45f, 15, 250, 250), replay);
+
+                GUI.DrawTexture(new Rect(Screen.width / 2.5f, 150, 65, 65), let1);
+				GUI.DrawTexture(new Rect(Screen.width / 2.2f, 150, 65, 65), let2);
+				GUI.DrawTexture(new Rect(Screen.width / 1.9f, 150, 65, 65), let3);
 			}
 			else
 			{
-				//Creates Word Image
-				b2 = GUI.Button(new Rect(200, 0, 200, 200), replay);
+                //Creates Word Image
+                 //Creates Word Image
+             
+                b2 = GUI.Button(new Rect(Screen.width / 2.45f, 15, 250, 250), replay);
 
-				GUI.DrawTexture(new Rect(195, 50, 65, 65), let1);
-				GUI.DrawTexture(new Rect(260, 50, 65, 65), let2);
-				GUI.DrawTexture(new Rect(325, 50, 65, 65), let3);
+                GUI.DrawTexture(new Rect(Screen.width / 2.5f, 150, 65, 65), let1);
+				GUI.DrawTexture(new Rect(Screen.width / 2.2f, 150, 65, 65), let2);
+				GUI.DrawTexture(new Rect(Screen.width / 1.9f, 150, 65, 65), let3);
 			}
 		}
 		else if (level == 3) {
-			//Creates Word Image
-			b2 = GUI.Button(new Rect(200, 0, 200, 200), replay);
-			GUI.DrawTexture(new Rect(200, 0, 200, 130), Word[ranDisplay]);
+            //Creates Word Image
+            b2 = GUI.Button(new Rect(Screen.width / 2.45f, 10, 200, 200), replay);
+            GUI.DrawTexture(new Rect(Screen.width/2.45f, 10, 200, 130), Word[ranDisplay]);
 
 			if(one==1||Hinted==true)
 			{
-				GUI.DrawTexture(new Rect(195, 135, 65, 65), let1);
+				GUI.DrawTexture(new Rect(Screen.width / 2.5f, 145, 65, 65), let1);
 			}
 			if(two==1||Hinted==true)
 			{
-				GUI.DrawTexture(new Rect(260, 135, 65, 65), let2);
+				GUI.DrawTexture(new Rect(Screen.width / 2.2f, 145, 65, 65), let2);
 			}
 			if(three==1||Hinted==true)
 			{
-				GUI.DrawTexture(new Rect(325, 135, 65, 65), let3);
+				GUI.DrawTexture(new Rect(Screen.width / 1.9f, 145, 65, 65), let3);
 			}
 		}
 
@@ -153,12 +162,12 @@ public class Spelling : MonoBehaviour {
 			playSound (wordSounds [ranDisplay], 0.8f);
 			newWord=-1;
 		}
-
-		int buttonSizeWidth = 35;
-		int buttonSizeHeight = 45;
-		int buttonSpacing = 3;
-		int xOffset = 60;
-		int yOffset = 210;
+        int buttonSizeWidth = 60;
+        int buttonSizeHeight = 75;
+        int buttonSpacing = 3;
+        int xOffset = Screen.width / 6;
+        int yOffset = Screen.height / 2;
+    
 		int numCols = 12;
 		int InDeX = 0;
 		int numButtons = 26;
@@ -281,10 +290,17 @@ public class Spelling : MonoBehaviour {
 		}
 	}
 
+
+
     public void loadMenu()
     {
         SceneManager.LoadScene(11);
 
+    }
+
+    public void skipPressed()
+    {
+        SetRandom();
     }
     //Sets Random Location in Word Array for the selected word
     void SetRandom()
@@ -338,7 +354,7 @@ public class Spelling : MonoBehaviour {
 		playAud.Play();
 	}
 
-	void hinted()
+	public void hinted()
 	{
 		if (level == 1) {
 			if(picKeyBoard==false)
@@ -357,17 +373,24 @@ public class Spelling : MonoBehaviour {
 		Hinted=true;
 		b3 = false;
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    IEnumerator waitForSeconds(float sec)
+    {
+        yield return new WaitForSeconds(sec);
+        isWrong = false;
+        isRight = false;
+    }
+
+    // Update is called once per frame
+    void Update () {
 		if (b3 == true) {
 			hinted();
 		}
 		//Skip function
-		if (b1 == true) {
-			b1 = false;
-			SetRandom ();
-		}
+		//if (b1 == true) {
+			//b1 = false;
+			//SetRandom ();
+		//}
 		//Replay function
 		if (b2 == true) {
 			b2 = false;
