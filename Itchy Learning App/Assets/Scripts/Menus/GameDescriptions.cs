@@ -82,7 +82,7 @@ public class GameDescriptions : MonoBehaviour {
             // GetComponentInChildren<Text>().text = description; // handle the spacing with inspector text
             this.transform.GetChild(0).GetComponent<Text>().text = title;
             this.transform.GetChild(1).GetComponent<Text>().text = description;
-            this.transform.GetChild(2).GetComponent<Text>().color = Color.white;
+            this.transform.GetChild(2).GetComponent<Text>().color = games[gameIndex].color;
             this.transform.GetChild(2).GetComponent<Text>().text = "Level: " + level;
 
         }

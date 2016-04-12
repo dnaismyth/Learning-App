@@ -1,12 +1,11 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{9F7CE082-4AA0-CD58-50C4-250558C11BCD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -46,60 +45,60 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Extra GUI Skins\SkinTest.cs" />
-    <Compile Include="Assets\Images\alphabet picture cues png\NewBehaviourScript.cs" />
-    <Compile Include="Assets\Scripts\DragMe.cs" />
-    <Compile Include="Assets\Scripts\DragPanel.cs" />
-    <Compile Include="Assets\Scripts\Dropping Game\CatchController.cs" />
-    <Compile Include="Assets\Scripts\Dropping Game\CoconutDropper.cs" />
-    <Compile Include="Assets\Scripts\Dropping Game\DragObject.cs" />
-    <Compile Include="Assets\Scripts\Dropping Game\DroppingOptions.cs" />
-    <Compile Include="Assets\Scripts\Dropping Game\GameImage.cs" />
-    <Compile Include="Assets\Scripts\Dropping Game\ImageController.cs" />
-    <Compile Include="Assets\Scripts\Dropping Game\PauseButton.cs" />
-    <Compile Include="Assets\Scripts\Dropping Game\SpawnCoconuts.cs" />
-    <Compile Include="Assets\Scripts\Dropping Game\WinOverlay.cs" />
-    <Compile Include="Assets\Scripts\FinalSounds.cs" />
-    <Compile Include="Assets\Scripts\Initial Sounds\IS_playButton.cs" />
-    <Compile Include="Assets\Scripts\Initial Sounds\ItchyMode.cs" />
-    <Compile Include="Assets\Scripts\Initial Sounds\initialSounds_settingsMouse.cs" />
-    <Compile Include="Assets\Scripts\Initial Sounds\initialsound_settings.cs" />
-    <Compile Include="Assets\Scripts\InitialSounds.cs" />
-    <Compile Include="Assets\Scripts\KeyBoard.cs" />
-    <Compile Include="Assets\Scripts\Matching Game\GameController.cs" />
-    <Compile Include="Assets\Scripts\Matching Game\cardBack.cs" />
-    <Compile Include="Assets\Scripts\Matching Game\helpButton.cs" />
-    <Compile Include="Assets\Scripts\Matching Game\letterButton.cs" />
-    <Compile Include="Assets\Scripts\Matching Game\letterSettings.cs" />
-    <Compile Include="Assets\Scripts\Matching Game\playButton.cs" />
-    <Compile Include="Assets\Scripts\Matching Game\removeButton.cs" />
-    <Compile Include="Assets\Scripts\Matching Game\selectAll.cs" />
-    <Compile Include="Assets\Scripts\Matching Game\settingsMouse.cs" />
-    <Compile Include="Assets\Scripts\Menus\ButtonScroll.cs" />
-    <Compile Include="Assets\Scripts\Menus\CloudFlow.cs" />
-    <Compile Include="Assets\Scripts\Menus\FogScript.cs" />
-    <Compile Include="Assets\Scripts\Menus\GameChoice.cs" />
-    <Compile Include="Assets\Scripts\Menus\GameDescriptions.cs" />
-    <Compile Include="Assets\Scripts\Menus\GameDisplay.cs" />
-    <Compile Include="Assets\Scripts\Menus\Itchy_Controller.cs" />
-    <Compile Include="Assets\Scripts\Menus\ItemObject.cs" />
-    <Compile Include="Assets\Scripts\Menus\MainMenuScript.cs" />
-    <Compile Include="Assets\Scripts\Menus\MakeGameObject.cs" />
-    <Compile Include="Assets\Scripts\Menus\PracticeModeScript.cs" />
-    <Compile Include="Assets\Scripts\Menus\SkyBG.cs" />
-    <Compile Include="Assets\Scripts\ResizePanel.cs" />
-    <Compile Include="Assets\Scripts\SoundRecon.cs" />
-    <Compile Include="Assets\Scripts\Spelling.cs" />
-    <Compile Include="Assets\Scripts\VowelSounds.cs" />
-    <Compile Include="Assets\Scripts\settingsRemoveButton.cs" />
-    <None Include="Assets\Sounds\Words\replace phonics from here.txt" />
-    <None Include="Assets\Fonts\Jupiter\LICENSE.txt" />
-    <Reference Include="UnityEngine.UI">
-      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
-    </Reference>
+     <Compile Include="Assets\Extra GUI Skins\SkinTest.cs" />
+     <Compile Include="Assets\Images\alphabet picture cues png\NewBehaviourScript.cs" />
+     <Compile Include="Assets\Scripts\DragMe.cs" />
+     <Compile Include="Assets\Scripts\DragPanel.cs" />
+     <Compile Include="Assets\Scripts\Dropping Game\CatchController.cs" />
+     <Compile Include="Assets\Scripts\Dropping Game\CoconutDropper.cs" />
+     <Compile Include="Assets\Scripts\Dropping Game\DragObject.cs" />
+     <Compile Include="Assets\Scripts\Dropping Game\DroppingOptions.cs" />
+     <Compile Include="Assets\Scripts\Dropping Game\GameImage.cs" />
+     <Compile Include="Assets\Scripts\Dropping Game\ImageController.cs" />
+     <Compile Include="Assets\Scripts\Dropping Game\PauseButton.cs" />
+     <Compile Include="Assets\Scripts\Dropping Game\SpawnCoconuts.cs" />
+     <Compile Include="Assets\Scripts\Dropping Game\WinOverlay.cs" />
+     <Compile Include="Assets\Scripts\FinalSounds.cs" />
+     <Compile Include="Assets\Scripts\Initial Sounds\IS_playButton.cs" />
+     <Compile Include="Assets\Scripts\Initial Sounds\ItchyMode.cs" />
+     <Compile Include="Assets\Scripts\Initial Sounds\initialSounds_settingsMouse.cs" />
+     <Compile Include="Assets\Scripts\Initial Sounds\initialsound_settings.cs" />
+     <Compile Include="Assets\Scripts\InitialSounds.cs" />
+     <Compile Include="Assets\Scripts\KeyBoard.cs" />
+     <Compile Include="Assets\Scripts\Matching Game\GameController.cs" />
+     <Compile Include="Assets\Scripts\Matching Game\cardBack.cs" />
+     <Compile Include="Assets\Scripts\Matching Game\helpButton.cs" />
+     <Compile Include="Assets\Scripts\Matching Game\letterButton.cs" />
+     <Compile Include="Assets\Scripts\Matching Game\letterSettings.cs" />
+     <Compile Include="Assets\Scripts\Matching Game\playButton.cs" />
+     <Compile Include="Assets\Scripts\Matching Game\removeButton.cs" />
+     <Compile Include="Assets\Scripts\Matching Game\selectAll.cs" />
+     <Compile Include="Assets\Scripts\Matching Game\settingsMouse.cs" />
+     <Compile Include="Assets\Scripts\Menus\ButtonScroll.cs" />
+     <Compile Include="Assets\Scripts\Menus\CloudFlow.cs" />
+     <Compile Include="Assets\Scripts\Menus\FogScript.cs" />
+     <Compile Include="Assets\Scripts\Menus\GameChoice.cs" />
+     <Compile Include="Assets\Scripts\Menus\GameDescriptions.cs" />
+     <Compile Include="Assets\Scripts\Menus\GameDisplay.cs" />
+     <Compile Include="Assets\Scripts\Menus\Itchy_Controller.cs" />
+     <Compile Include="Assets\Scripts\Menus\ItemObject.cs" />
+     <Compile Include="Assets\Scripts\Menus\MainMenuScript.cs" />
+     <Compile Include="Assets\Scripts\Menus\MakeGameObject.cs" />
+     <Compile Include="Assets\Scripts\Menus\PracticeModeScript.cs" />
+     <Compile Include="Assets\Scripts\Menus\SkyBG.cs" />
+     <Compile Include="Assets\Scripts\ResizePanel.cs" />
+     <Compile Include="Assets\Scripts\SoundRecon.cs" />
+     <Compile Include="Assets\Scripts\Spelling.cs" />
+     <Compile Include="Assets\Scripts\VowelSounds.cs" />
+     <Compile Include="Assets\Scripts\settingsRemoveButton.cs" />
+     <None Include="Assets\Sounds\Words\replace phonics from here.txt" />
+     <None Include="Assets\Fonts\Jupiter\LICENSE.txt" />
+ <Reference Include="UnityEngine.UI">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Networking">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -109,4 +108,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  
 </Project>

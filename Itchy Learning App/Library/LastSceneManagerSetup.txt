@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/InitialSounds.unity
+- path: Assets/Scenes/Dropping Options.unity
   isLoaded: 1
   isActive: 1
