@@ -105,7 +105,7 @@ public class Spelling : MonoBehaviour {
 			b2 = GUI.Button(new Rect(200, 0, 200, 200), replay);
 			GUI.DrawTexture(new Rect(200, 0, 200, 130), Word[ranDisplay]);
 
-			GUI.DrawTexture(new Rect(195, 135, 65, 65), let1);
+			GUI.DrawTexture(new Rect(195, 135, 100, 65), let1);
 			GUI.DrawTexture(new Rect(260, 135, 65, 65), let2);
 			GUI.DrawTexture(new Rect(325, 135, 65, 65), let3);
 		}

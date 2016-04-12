@@ -51,6 +51,9 @@ public class GameDescriptions : MonoBehaviour {
             case "10":
                 gameIndex = 3;
                 break;
+            case "11":
+                gameIndex = 7;
+                break;
             case "12":
                 gameIndex = 5;
                 break;       

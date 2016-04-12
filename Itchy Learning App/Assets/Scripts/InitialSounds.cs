@@ -212,7 +212,7 @@ public class InitialSounds: MonoBehaviour {
             b4 = GUI.Button(new Rect(Screen.width / 1.6f, Screen.height / 1.5f, 150, 150), fontLetters[letterOptions[3]]);
         }
 
-        //b5 = GUI.Button(new Rect(1200, 575, 150, 100), skip);
+        b5 = GUI.Button(new Rect(1200, 575, 150, 100), skip);
         //Creates Word Image
         GUI.skin = imageSkin;
         imageSkin.button.normal.background = (Texture2D)temp;

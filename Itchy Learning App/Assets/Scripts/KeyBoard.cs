@@ -6,9 +6,16 @@ using UnityEngine.SceneManagement;
 
 //[RequireComponent(typeof(AudioSource))]
 public class KeyBoard : MonoBehaviour {
-
-	//Arrays to hold Picture and Letter Cues
-	public Texture[]pictureLetters;
+    public GUISkin skin;
+    public GUISkin imageSkin;
+    public Texture2D buttonWrong;  // hold the texture for wrong button
+    public Texture2D buttonCorrect; // hold the texture image for correct
+    public Texture2D buttonNormal;  // hold texture for normal appearance
+    public Texture2D buttonActive;
+    public bool isWrong = false;    // use these to check if the button has updated its appearance 
+    public bool isRight = false;
+    //Arrays to hold Picture and Letter Cues
+    public Texture[]pictureLetters;
 	public Texture[]fontLetters;
 	//Border Image
 	public Texture border;
@@ -73,37 +80,49 @@ public class KeyBoard : MonoBehaviour {
 
     }
 
+    public void skipPressed()
+    {
+            SetRandom();
+     
+    }
+
     void OnGUI()
 	{
-		//Replays sound if image is pressed
-		if (b2 == true) {
+
+
+        //Replays sound if image is pressed
+        if (b2 == true) {
 			playSound(wordSounds [ranDisplay],0.8f);
 			b2=false;
 		}
 		//Checks if user wants to skip
-		if (b1 == true) {
+		/*if (b1 == true) {
 			//score++;
 			//rounds++;
 			b1=false;
 			SetRandom();
-		}
+		}*/
 
-		b1 = GUI.Button (new Rect (480, 300, 75, 50), skip);
-		//Creates Word Image
-		b2 = GUI.Button(new Rect(200, 0, 200, 200), replay);
-
-		int buttonSizeWidth = 35;
-		int buttonSizeHeight = 45;
+		//b1 = GUI.Button (new Rect (480, 300, 75, 50), skip);
+		
+		int buttonSizeWidth = 60;
+		int buttonSizeHeight = 75;
 		int buttonSpacing = 3;
-		int xOffset = 60;
-		int yOffset = 210;
+		int xOffset = Screen.width/6;
+		int yOffset = Screen.height/2;
 		int numCols = 12;
 		int InDeX = 0;
 		int numButtons = 26;
-		//float nextUse = 0f;
-		//float delay = 5f;
-		/**********************************/
-		Texture[] display;//Holds letter images that will be displayed on the keyboard
+        Color colour = Color.white;
+        colour.a = 1;
+        GUI.backgroundColor = colour;
+        GUI.skin = skin;
+        skin.button.normal.background = buttonNormal;
+        skin.button.hover.background = buttonActive;
+        //float nextUse = 0f;
+        //float delay = 5f;
+        /**********************************/
+        Texture[] display;//Holds letter images that will be displayed on the keyboard
 		//Checks whether picture letters or font letters are being displayed
 		if (picKeyBoard) {
 			display = fontLetters;
@@ -116,10 +135,12 @@ public class KeyBoard : MonoBehaviour {
 			playSound(wordSounds [ranDisplay],0.8f);
 			newWord = 1;
 		}
-		//Creates Image to match
-		GUI.DrawTexture (new Rect (200, 0, 200, 200), display [ranDisplay], ScaleMode.ScaleToFit, true, 1.0F);
+
+
+        //Creates Image to match
+       // GUI.DrawTexture (new Rect (Screen.width/2.5f, 10, 200, 200), display [ranDisplay], ScaleMode.ScaleToFit, true, 1.0F);
 		//Creates surrounding border
-		GUI.DrawTexture (new Rect (200, 0, 200, 200), border, ScaleMode.ScaleToFit, true, 1.0F);
+		GUI.DrawTexture (new Rect (Screen.width/2.5f, 10, 200, 200), border, ScaleMode.ScaleToFit, true, 1.0F);
 		//*****************************************************************************************
 		Rect r = new Rect (0, 0, buttonSizeWidth, buttonSizeHeight); // rect for picture cues
 		Rect r2 = new Rect (0, 0, buttonSizeWidth, buttonSizeHeight);
@@ -186,10 +207,35 @@ public class KeyBoard : MonoBehaviour {
 				InDeX++;
 			}
 		}
-	}
 
-	//Sets Random Location in Word Array for the selected word
-	void SetRandom()
+        //Creates Word Image
+        GUI.skin = imageSkin;
+        Texture temp = pictureLetters[ranDisplay];
+
+        imageSkin.button.normal.background = (Texture2D)temp;
+        imageSkin.button.hover.background = null;
+        if (isWrong == true)
+        {
+            imageSkin.button.normal.background = buttonWrong;
+            StartCoroutine(waitForSeconds(1.5f));
+        }
+        else if (isRight == true)
+        {
+            imageSkin.button.normal.background = buttonCorrect;
+            StartCoroutine(waitForSeconds(1.5f));
+        }
+        b2 = GUI.Button(new Rect(Screen.width / 2.5f, 10, 200, 200), replay);
+    }
+
+    IEnumerator waitForSeconds(float sec)
+    {
+        yield return new WaitForSeconds(sec);
+        isWrong = false;
+        isRight = false;
+    }
+
+    //Sets Random Location in Word Array for the selected word
+    void SetRandom()
 	{
 		//Stores index of previous word
 		int prev = ranDisplay;
@@ -223,11 +269,13 @@ public class KeyBoard : MonoBehaviour {
 		and set a new random word using SetRandom()*/
 		if(!playAud.isPlaying){
 			if(congrat==1){
+                isRight = true;
 				congrat=Random.Range(0, 10);
 				playSound(Yay[congrat], 0.8f);
 				congrat=0;
 			}
 			else if(congrat==2){
+                isWrong = true;
 				congrat=Random.Range(0, 5);
 				playSound(Nay[congrat], 0.8f);
 				congrat=0;
