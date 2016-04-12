@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using UnityEngine.SceneManagement;
 
 public class CatchController : MonoBehaviour
 {
@@ -320,4 +321,15 @@ public class CatchController : MonoBehaviour
         }
     }
 
+    public void loadMenu()
+    {
+        SceneManager.LoadScene(11);
+
+    }
+
+    public void playAgain()
+    {
+        SceneManager.LoadScene(2);
+
+    }
 }

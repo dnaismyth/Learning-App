@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 //[RequireComponent(typeof(AudioSource))]
 public class KeyBoard : MonoBehaviour {
@@ -42,6 +43,12 @@ public class KeyBoard : MonoBehaviour {
 	//keeps track of negative score points
 	public int score=0;
 
+
+    void Awake()
+    {
+        PlayerPrefs.SetInt("currentGame", 7);       // set the current game to the appropriate scene, this will be used to pass throug
+        PlayerPrefs.Save();
+    }
 	//Runs at Startup
 	void Start()
 	{
@@ -60,7 +67,13 @@ public class KeyBoard : MonoBehaviour {
 		congrat = 0;
 	}
 
-	void OnGUI()
+    public void loadMenu()
+    {
+        SceneManager.LoadScene(11);
+
+    }
+
+    void OnGUI()
 	{
 		//Replays sound if image is pressed
 		if (b2 == true) {

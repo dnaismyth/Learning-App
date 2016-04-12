@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Text.RegularExpressions;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameDescriptions : MonoBehaviour {
 
@@ -65,27 +68,33 @@ public class GameDescriptions : MonoBehaviour {
             title = games[gameIndex].itemName;
             level = games[gameIndex].difficulty;
 
-            GUI.skin.font = font;
-            style.fontSize = 60;
-            style.normal.textColor = Color.white;
+             GUI.skin.font = font;
+             style.fontSize = 60;
+             style.normal.textColor = Color.white;
 
-            GUI.Label(new Rect(Screen.width / 2 - title.Length*11, Screen.height / 6, 100, 50), title, style);
+             style.fontSize = 40;
 
-            style.fontSize = 40;
-
-            Color myColor = new Color();
-            //Debug.Log(games[gameIndex].color.ToString());
-            ColorUtility.TryParseHtmlString(games[gameIndex].color.ToString(), out myColor);
-            style.normal.textColor = myColor;
-            GUI.Label(new Rect(Screen.width / 2 - level.Length*11, Screen.height / 3, 100, 50), level, style);
-
-            style.fontSize = 30;
-            style.normal.textColor = Color.white;
-            GUI.Label(new Rect(0, Screen.height / 1.5f, 100, 50), description, style);
-
+             Color myColor = new Color();
+             //Debug.Log(games[gameIndex].color.ToString());
+             ColorUtility.TryParseHtmlString(games[gameIndex].color.ToString(), out myColor);
+             style.normal.textColor = myColor;
+             //GUI.Label(new Rect(Screen.width / 2 - level.Length*22, Screen.height / 2.5f, 100, 50), "Level: " +  level, style);
+            // GetComponentInChildren<Text>().text = description; // handle the spacing with inspector text
+            this.transform.GetChild(0).GetComponent<Text>().text = title;
+            this.transform.GetChild(1).GetComponent<Text>().text = description;
+            this.transform.GetChild(2).GetComponent<Text>().color = Color.white;
+            this.transform.GetChild(2).GetComponent<Text>().text = "Level: " + level;
 
         }
 
+    }
+
+    public void playPressed()
+    {
+        
+        SceneManager.LoadScene(games[gameIndex].sceneNum);
+        PlayerPrefs.SetInt("currentGame", games[gameIndex].sceneNum);       // set the current game chosen
+        
     }
 
 }

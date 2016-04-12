@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 /***********************************************************************/
 // NOTES TO SELF: things that need fixing:
@@ -52,10 +53,21 @@ public class GameController : MonoBehaviour {
         createLetters();
         createPictures();
         playAudio = GetComponent<AudioSource>();
-        playAudio.PlayOneShot(openingMessage); // "have fun finding the letters + pic cues that match"
+        //playAudio.PlayOneShot(openingMessage); // "have fun finding the letters + pic cues that match"
 		ShufflePictures(chosenPics, chosenLets);
     }
 
+    public void loadMenu()
+    {
+        SceneManager.LoadScene(11);
+
+    }
+
+    public void playAgain()
+    {
+        SceneManager.LoadScene(PlayerPrefs.GetInt("currentGame"));
+
+    }
 
 
     // This method will extract the ids of each letter from the PlayerPrefs, and store into a list to be used for displaying their choices
@@ -319,7 +331,7 @@ public class GameController : MonoBehaviour {
     void Awake()
     {
         menu.SetActive(false); // start with the winning screen set to false (not showing)
-        PlayerPrefs.SetInt("currentGame", 0);
+        PlayerPrefs.SetInt("currentGame", 1);
         PlayerPrefs.Save();
 
     }

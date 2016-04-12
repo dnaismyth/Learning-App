@@ -12,6 +12,10 @@ public class GameChoice : MonoBehaviour {
 
     void Awake()
     {
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.SetInt("itchyMode", 1); // by default, itchy mode enabled
+        PlayerPrefs.Save();
+        
         //gameActive = false;
         gameChoice = "";
         currentGame.GetComponent<Canvas>().enabled = false;
@@ -37,6 +41,13 @@ public class GameChoice : MonoBehaviour {
         setGameActive(true);
         currentGame.GetComponent<Canvas>().enabled = true;
         bs.setIsScrolling(false);
+    }
+
+    public void OnExit()
+    {
+        currentGame.GetComponent<Canvas>().enabled = false;
+        bs.setIsScrolling(true);
+            //TODO pause audio, check out later
     }
 
     IEnumerator playSoundAfter()

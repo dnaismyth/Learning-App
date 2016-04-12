@@ -80,10 +80,13 @@ public class FinalSounds: MonoBehaviour {
 		
 		//Initializes level
 		level = 1;
-		//Initializes Itchy Mode
-		itchyMode = true;
-		//Initalize congrat
-		congrat = 0;
+        //Initializes Itchy Mode
+        if (PlayerPrefs.GetInt("itchyMode") == 1)
+            itchyMode = true;
+        else
+            itchyMode = false;
+        //Initalize congrat
+        congrat = 0;
 		
 		//Initializes AudioSource
 		playAud=gameObject.AddComponent<AudioSource> ();

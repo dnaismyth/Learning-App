@@ -27,13 +27,13 @@ public class letterButton : MonoBehaviour
 
     public void OnMouseDown()
     {
-        if (PlayerPrefs.GetInt("currentGame") != 0)
+        if (PlayerPrefs.GetInt("currentGame") == 1)
         {
-          SceneManager.LoadScene(6);       //redirect to initialsoundssetting screen, if have time, change this later
+          SceneManager.LoadScene(0);       //redirect to initialsoundssetting screen, if have time, change this later
         }
         else
         {
-            SceneManager.LoadScene("Settings");
+            SceneManager.LoadScene(6);
         }
         transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
     }

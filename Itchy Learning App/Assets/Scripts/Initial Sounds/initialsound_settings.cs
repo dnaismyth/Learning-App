@@ -46,7 +46,7 @@ public class initialsound_settings : MonoBehaviour {
                // Debug.Log(PlayerPrefs.GetInt(playerPrefName + i));
             }
         }
-        else if (currentGame == 12)
+        else if (currentGame == 10)
         {
             playerPrefName = "vowel_letter";
             createVowels();

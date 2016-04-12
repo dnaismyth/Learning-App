@@ -9,6 +9,6 @@ public class ItemObject : ScriptableObject
     public string difficulty = "level of difficulty";
     public string title = "title";
     public int sceneNum = 0;
-    public Color color;
+    public Color32 color;
     public AudioClip voiceDesc; // Audio of the description of the game
 }

@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 //[RequireComponent(typeof(AudioSource))]
 public class VowelSounds: MonoBehaviour {
@@ -80,9 +81,10 @@ public class VowelSounds: MonoBehaviour {
     void Awake()
     {
 
-        PlayerPrefs.SetInt("currentGame", 12);       // set the current game to the appropriate scene, this will be used to pass throug
+        PlayerPrefs.SetInt("currentGame", 10);       // set the current game to the appropriate scene, this will be used to pass throug
         PlayerPrefs.Save();                                           // to the letters option
         initializeUsable();
+        Debug.Log("Itchy mode: " + PlayerPrefs.GetInt("itchyMode"));
     }
 	//Runs at Startup
 	void Start()
@@ -91,8 +93,11 @@ public class VowelSounds: MonoBehaviour {
 		
 		//Initializes level
 		level = 1;
-		//Initializes Itchy Mode
-		itchyMode = true;
+        //Initializes Itchy Mode
+        if (PlayerPrefs.GetInt("itchyMode") == 1)
+            itchyMode = true;
+        else
+            itchyMode = false;
 		//Initialize congrat
 		congrat = 0;
 		
@@ -115,6 +120,7 @@ public class VowelSounds: MonoBehaviour {
 		SetRandom ();
 	}
 	
+  
 	//Creates Buttons
 	void OnGUI()
 	{
@@ -181,6 +187,12 @@ public class VowelSounds: MonoBehaviour {
         yield return new WaitForSeconds(sec);
         isWrong = false;
         isRight = false;
+    }
+
+    public void loadMenu()
+    {
+        SceneManager.LoadScene(11);
+
     }
 
     void initializeUsable()

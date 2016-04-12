@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 //[RequireComponent(typeof(AudioSource))]
 public class InitialSounds: MonoBehaviour {
@@ -81,6 +82,8 @@ public class InitialSounds: MonoBehaviour {
 	//Runs at Startup
     void Awake()
     {
+        PlayerPrefs.SetInt("currentGame", 5);       // set the current game to the appropriate scene, this will be used to pass throug
+        PlayerPrefs.Save();
         // Set the current game corresponding to scene number
         initializeUsable();
         ranDisplay = UnityEngine.Random.Range(0, 52);
@@ -95,10 +98,13 @@ public class InitialSounds: MonoBehaviour {
 
         //Initializes level
         level = 1;
-		//Initializes Itchy Mode
-		itchyMode = true;
-		//Initalize congrat
-		congrat = 0;
+        //Initializes Itchy Mode
+        if (PlayerPrefs.GetInt("itchyMode") == 1)
+            itchyMode = true;
+        else
+            itchyMode = false;
+        //Initalize congrat
+        congrat = 0;
 
 		//Initializes AudioSource
 		playAud=gameObject.AddComponent<AudioSource> ();
@@ -123,6 +129,12 @@ public class InitialSounds: MonoBehaviour {
 		//Sets ranDisplay
 		SetRandom ();
 	}
+
+    public void loadMenu()
+    {
+        SceneManager.LoadScene(11);
+
+    }
 
     void initializeUsable()
     {

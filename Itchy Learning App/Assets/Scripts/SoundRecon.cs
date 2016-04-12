@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class SoundRecon : MonoBehaviour {
 	
@@ -79,6 +80,12 @@ public class SoundRecon : MonoBehaviour {
 	//Stores Sound Type
 	public string SoundType;
 	
+
+    void Awake()
+    {
+        PlayerPrefs.SetInt("currentGame", 8);       // set the current game to the appropriate scene, this will be used to pass throug
+        PlayerPrefs.Save();
+    }
 	// Use this for initialization
 	void Start () {
 		//Chooses which sound type will be displayed
@@ -105,10 +112,12 @@ public class SoundRecon : MonoBehaviour {
 
 		//Initializes rounds
 		rounds = 10;
-		//Initializes Itchy Mode
-		itchyMode = true;
-		//Initalize congrat
-		congrat = 0;
+        if (PlayerPrefs.GetInt("itchyMode") == 1)
+            itchyMode = true;
+        else
+            itchyMode = false;
+        //Initalize congrat
+        congrat = 0;
 		
 		//Initializes AudioSource
 		playAud=gameObject.AddComponent<AudioSource> ();
@@ -117,9 +126,15 @@ public class SoundRecon : MonoBehaviour {
 		//Sets ranDisplay
 		SetRandom ();
 	}
-	
-	//Creates Buttons
-	void OnGUI()
+
+    public void loadMenu()
+    {
+        SceneManager.LoadScene(11);
+
+    }
+
+    //Creates Buttons
+    void OnGUI()
 	{
 		//Holds new Word Texture
 		Texture temp = Words [ranDisplay];

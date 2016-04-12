@@ -106,7 +106,7 @@ public class letterSettings : MonoBehaviour {
 		foreach (settingsMouse card in allChoices) {
 			card.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
             card.GetComponent<SpriteRenderer>().color = Color.white;
-			PlayerPrefs.DeleteAll();
+            PlayerPrefs.DeleteKey("letter" + card.getId());
             PlayerPrefs.Save();
 
         }
@@ -168,6 +168,7 @@ public class letterSettings : MonoBehaviour {
 
     void OnDestroy(){
         	saveUserPreferences();
+        PlayerPrefs.Save();
     }
 
 

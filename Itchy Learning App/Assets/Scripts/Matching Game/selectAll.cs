@@ -3,7 +3,7 @@ using System.Collections;
 
 public class selectAll : MonoBehaviour {
 	public Color highlightColor = Color.white;
-	//[SerializeField] private letterSettings settings;
+	//public initialsound_settings settings;
 	static bool selectAllLetters = true;
 
 

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Spelling : MonoBehaviour {
 
@@ -64,6 +65,12 @@ public class Spelling : MonoBehaviour {
 	//Indicates third tier answered correctly
 	public int three;
 
+
+    void Awake()
+    {
+        PlayerPrefs.SetInt("currentGame", 9);       // set the current game to the appropriate scene, this will be used to pass throug
+        PlayerPrefs.Save();
+    }
 	// Use this for initialization
 	void Start () {
 		//Set level
@@ -273,8 +280,14 @@ public class Spelling : MonoBehaviour {
 			}
 		}
 	}
-	//Sets Random Location in Word Array for the selected word
-	void SetRandom()
+
+    public void loadMenu()
+    {
+        SceneManager.LoadScene(11);
+
+    }
+    //Sets Random Location in Word Array for the selected word
+    void SetRandom()
 	{
 		//Reset hints
 		Hinted = false;
