@@ -42,9 +42,9 @@ public class IS_playButton : MonoBehaviour {
         PlayerPrefs.Save();
         if (checkEmpty.getIsEmpty() == false)
         {
-            if (PlayerPrefs.GetInt("currentGame") != 0) // change this
+            if (PlayerPrefs.GetInt("currentGame") != 1) // change this
             {
-                SceneManager.LoadScene(PlayerPrefs.GetInt("currentGame")); // corresponds to initial sounds game
+                SceneManager.LoadScene(PlayerPrefs.GetInt("currentGame"));
             }
             else
             {

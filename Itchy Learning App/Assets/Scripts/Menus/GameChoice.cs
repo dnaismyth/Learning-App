@@ -12,7 +12,7 @@ public class GameChoice : MonoBehaviour {
 
     void Awake()
     {
-        PlayerPrefs.DeleteAll();
+        //PlayerPrefs.DeleteAll();
         PlayerPrefs.SetInt("itchyMode", 1); // by default, itchy mode enabled
         PlayerPrefs.Save();
         

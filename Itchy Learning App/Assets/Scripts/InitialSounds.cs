@@ -18,7 +18,8 @@ public class InitialSounds: MonoBehaviour {
 	//Arrays to hold Picture and Letter Cues
 	public Texture[]pictureLetters;
 	public Texture[]fontLetters;
-
+    int test = 0;
+    private int buttonClicked = 27;
 	//For Word Storage
 	public Texture[]Words;
 	public Texture[]Words1;
@@ -53,15 +54,15 @@ public class InitialSounds: MonoBehaviour {
 	public bool respons;
 	//Level indicator
 	public int level;
-	//Boolean values for the four buttons to indicate which has been selected
-	public bool b1;
-	public bool b2;
-	public bool b3;
-	public bool b4;
-	//Button to skip question
-	public bool b5;
-	//Button to replay sound
-	public bool b6;
+    //Boolean values for the four buttons to indicate which has been selected
+    public bool b1 = false;
+    public bool b2 = false;
+    public bool b3 = false;
+    public bool b4 = false;
+    //Button to skip question
+    //public bool b5 = false;
+    //Button to replay sound
+    public bool b6 = false;
 	//Boolean to check itchy mode
 	public bool itchyMode;
     //Array to store whether or not certain letters are being used
@@ -78,31 +79,66 @@ public class InitialSounds: MonoBehaviour {
 	public Texture skip;
 	//Holds replay Icon Texture
 	public Texture replay;
+    // used to hold a percent of which array to use
+    private int percent;
 
 	//Runs at Startup
     void Awake()
     {
-        PlayerPrefs.SetInt("currentGame", 5);       // set the current game to the appropriate scene, this will be used to pass throug
+        //Assigns an audio source	
+        playAud = gameObject.AddComponent<AudioSource>();
+        PlayerPrefs.SetInt("currentGame", 6);       // set the current game to the appropriate scene, this will be used to pass throug
         PlayerPrefs.Save();
-        // Set the current game corresponding to scene number
-        initializeUsable();
-        ranDisplay = UnityEngine.Random.Range(0, 52);
-
-    }
-
-    void Start()
-	{
-        PlayerPrefs.SetInt("currentGame", 5);
-        PlayerPrefs.Save();
-        //Initializes usable letters
-
-        //Initializes level
-        level = 1;
         //Initializes Itchy Mode
         if (PlayerPrefs.GetInt("itchyMode") == 1)
             itchyMode = true;
         else
             itchyMode = false;
+        // Set the current game corresponding to scene number
+        initializeUsable();
+        //pickAll();
+        ranDisplay = UnityEngine.Random.Range(0, 52);
+        createPercent();
+    }
+
+    void createPercent()
+    {
+        percent = UnityEngine.Random.Range(0, 100);
+        //Initializes words to use
+        if (percent < 33)
+            level = 1;
+        else if (percent > 33 && percent < 66)
+            level = 2;
+        else
+            level = 3;
+
+
+        if (level == 2)
+        {
+            //rounds=10;
+            Words = Words2;
+            wordSounds = wordSounds2;
+        }
+        else if (level == 3)
+        {
+            //rounds=15;
+            Words = Words3;
+            wordSounds = wordSounds3;
+        }
+        else
+        {
+            //rounds=5;
+            Words = Words1;
+            wordSounds = wordSounds1;
+        }
+
+        //Debug.Log(percent);
+    }
+
+    void Start()
+	{
+        //Debug.Log("Screen width is: " + Screen.width + "Screen height is: " + Screen.height);
+
         //Initalize congrat
         congrat = 0;
 
@@ -111,48 +147,37 @@ public class InitialSounds: MonoBehaviour {
 		//Initializes ranDisplay in order to initialize prev in SetRandom();
 		ranDisplay = -1;
 		//sets array of pictures/sounds and rounds based on level
-		if (level == 2) {
-			rounds=15;
-			Words=Words2;
-			wordSounds=wordSounds2;
-		}
-		else if (level == 3) {
-			rounds=20;
-			Words=Words3;
-			wordSounds=wordSounds3;
-		}
-		else{
-			rounds=10;
-			Words=Words1;
-			wordSounds=wordSounds1;
-		}
+	
 		//Sets ranDisplay
 		SetRandom ();
 	}
 
     public void loadMenu()
     {
-        SceneManager.LoadScene(11);
+        SceneManager.LoadScene(0);
 
+    }
+
+    void pickAll()
+    {
+        for(int j = 0; j <= 25; j++)
+        {
+            usable[j] = true;
+        }
     }
 
     void initializeUsable()
     {
+  
         //Debug current letters player has picked
         for (int i = 0; i <= 25; i++)
         {
+           
             int letterId = PlayerPrefs.GetInt("initial_letter" + i);
-            if(/*letterId != null &&*/ letterId != -1)  // user has selected specific letters to be chosen, therefore default will not be used (all letters)
+            if(letterId != -1)
             {
-                Debug.Log("CURRENT LETTER ID CHOSEN: " + letterId);
                 usable[letterId] = true;
-                userChoices = true;
-                Debug.Log(usable[i]);
             }
-            else if(userChoices == false){ 
-                usable[i] = true;      // if user has not selected specific letters, set them all to be used as default
-            }
-
 
         }
     }
@@ -160,9 +185,13 @@ public class InitialSounds: MonoBehaviour {
     //Creates Buttons
     void OnGUI()
     {
-
         //Holds new Word Texture
+        
         Texture temp = Words[ranDisplay];
+        if(temp == null) // will have to change this later when receive more pictures
+        {
+            SetRandom();
+        }
         //Checks if a new Word is necessary, if so play the corresponding sound
         if (newWord == 0)
         {
@@ -176,43 +205,53 @@ public class InitialSounds: MonoBehaviour {
             b6 = false;
         }
         //Checks if user wants to skip
-        if (b5 == true)
+        /*if (b5 == true)
         {
             score++;
-            rounds++;
+            //rounds++;
             b5 = false;
             SetRandom();
+        }*/
+
+        //If any of the letter buttons have been clicked (true) check the buttons correctness
+        if (b1 == true || b2 == true || b3 == true || b4 == true)
+        {
+            checkCorrectness();
         }
+
+
         Color colour = Color.white;
         colour.a = 1;
         GUI.backgroundColor = colour;
         GUI.skin = skin;
         skin.button.normal.background = buttonNormal;
-        skin.button.hover.background = buttonActive;
+
+        skin.button.hover.background = null;
+       
         //Option Buttons b1-b4 and positioning
         if (itchyMode == true)
         {
+            b1 = GUI.Button(new Rect(Screen.width / 4.1f, Screen.height / 10, Screen.width / 7, Screen.height / 4.5f), pictureLetters[letterOptions[0]]);
 
-            b1 = GUI.Button(new Rect(Screen.width / 4.1f, Screen.height / 10, 150, 150), pictureLetters[letterOptions[0]]);
+            b2 = GUI.Button(new Rect(Screen.width / 1.6f, Screen.height / 10, Screen.width / 7, Screen.height / 4.5f), pictureLetters[letterOptions[1]]);
 
-            b2 = GUI.Button(new Rect(Screen.width / 1.6f, Screen.height / 10, 150, 150), pictureLetters[letterOptions[1]]);
+            b3 = GUI.Button(new Rect(Screen.width / 4.1f, Screen.height / 1.5f, Screen.width / 7, Screen.height / 4.5f), pictureLetters[letterOptions[2]]);
 
-            b3 = GUI.Button(new Rect(Screen.width / 4.1f, Screen.height / 1.5f, 150, 150), pictureLetters[letterOptions[2]]);
-            b4 = GUI.Button(new Rect(Screen.width / 1.6f, Screen.height / 1.5f, 150, 150), pictureLetters[letterOptions[3]]);
+            b4 = GUI.Button(new Rect(Screen.width / 1.6f, Screen.height / 1.5f, Screen.width / 7, Screen.height / 4.5f), pictureLetters[letterOptions[3]]);
         }
         else if (itchyMode == false)
         {
 
-            b1 = GUI.Button(new Rect(Screen.width / 4.1f, Screen.height / 10, 150, 150), fontLetters[letterOptions[0]]);
+            b1 = GUI.Button(new Rect(Screen.width / 4.1f, Screen.height / 10, Screen.width / 7, Screen.height / 4.5f), fontLetters[letterOptions[0]]);
 
-            b2 = GUI.Button(new Rect(Screen.width / 1.6f, Screen.height / 10, 150, 150), fontLetters[letterOptions[1]]);
+            b2 = GUI.Button(new Rect(Screen.width / 1.6f, Screen.height / 10, Screen.width / 7, Screen.height / 4.5f), fontLetters[letterOptions[1]]);
 
-            b3 = GUI.Button(new Rect(Screen.width / 4.1f, Screen.height / 1.5f, 150, 150), fontLetters[letterOptions[2]]);
+            b3 = GUI.Button(new Rect(Screen.width / 4.1f, Screen.height / 1.5f, Screen.width / 7, Screen.height / 4.5f), fontLetters[letterOptions[2]]);
 
-            b4 = GUI.Button(new Rect(Screen.width / 1.6f, Screen.height / 1.5f, 150, 150), fontLetters[letterOptions[3]]);
+            b4 = GUI.Button(new Rect(Screen.width / 1.6f, Screen.height / 1.5f, Screen.width / 7, Screen.height / 4.5f), fontLetters[letterOptions[3]]);
         }
 
-        b5 = GUI.Button(new Rect(1200, 575, 150, 100), skip);
+        //b5 = GUI.Button(new Rect(1200, 575, 150, 100), skip);
         //Creates Word Image
         GUI.skin = imageSkin;
         imageSkin.button.normal.background = (Texture2D)temp;
@@ -227,12 +266,15 @@ public class InitialSounds: MonoBehaviour {
             imageSkin.button.normal.background = buttonCorrect;
             StartCoroutine(waitForSeconds(1.5f));
         }
-        b6 = GUI.Button(new Rect(Screen.width / 2.4f, Screen.height / 2.9f, 200, 200), replay);
+        b6 = GUI.Button(new Rect(Screen.width / 2.5f, Screen.height / 2.99f, Screen.width / 4.6f, Screen.height / 3), replay);
 
-        //GUI.DrawTexture(new Rect(Screen.width/2.5f, Screen.height/3.5f, 200, 200), temp, ScaleMode.ScaleToFit, true, 1.0F);
+        //GUI.DrawTexture(new Rect(Screen.width/2.5f, Screen.height/3.5f, Screen.width / 4.5f, Screen.height / 3), temp, ScaleMode.ScaleToFit, true, 1.0F);
         //Creates surrounding border
-        GUI.DrawTexture(new Rect(Screen.width / 2.4f, Screen.height / 2.9f, 200, 200), border, ScaleMode.ScaleToFit, true, 1.0F);
+        GUI.DrawTexture(new Rect(Screen.width / 2.5f, Screen.height / 2.99f, Screen.width / 4.6f, Screen.height / 3), border, ScaleMode.StretchToFill, true, 1.0F);
+        
+
     }
+
 	
 
     // helper method to change the background of a button
@@ -244,7 +286,8 @@ public class InitialSounds: MonoBehaviour {
 	//Sets Random Location in Word List for the selected word
 	void SetRandom()
 	{
-		prev = ranDisplay;
+        createPercent();
+        prev = ranDisplay;
        
         ranDisplay = UnityEngine.Random.Range(0, 52);
        
@@ -322,10 +365,18 @@ public class InitialSounds: MonoBehaviour {
 			letterOptions [2] = y;
 			letterOptions [3] = z;
 		}
+      
 
 	}
 
-   
+    // function used to check if the user has skipped the current image
+    public void checkSkipped()
+    {
+        SetRandom();
+        Debug.Log("I AM CLICKED");
+    }
+
+
 
     IEnumerator waitForSeconds(float sec)
     {
@@ -334,33 +385,41 @@ public class InitialSounds: MonoBehaviour {
         isRight = false;
     }
 
+    void checkButton()
+    {
+        
+        //Checks boolean values to determine which button was clicked
+        if (b1 == true)
+        { 
+            buttonClicked = 1;
+        }
+        if (b2 == true)
+        {
+            buttonClicked = 2;
+        }
+        if (b3 == true)
+        {
+            buttonClicked = 3;
+        }
+        if (b4 == true)
+        {
+            buttonClicked = 4;
+        }
+        //Resets Boolean Values
+        b1 = false;
+        b2 = false;
+        b3 = false;
+        b4 = false;
+    }
+
     //Checks that the correct answer was selected
     void checkCorrectness()
-	{
-		//Placeholder value
-		int buttonClicked = 27;
-
-		//Checks boolean values to determine which button was clicked
-		if (b1 == true) {
-			buttonClicked = 1;
-		}
-		if (b2 == true) {
-			buttonClicked = 2;
-		}
-		if (b3 == true) {
-			buttonClicked = 3;
-		}
-		if (b4 == true) {
-			buttonClicked = 4;
-		}
-		//Resets Boolean Values
-		b1=false;
-		b2=false;
-		b3=false;
-		b4=false;
-
-		//Calls response to indicate if the button chosen results in true or false answers
-		response (buttonClicked);
+    {
+        //Placeholder value
+        //buttonClicked = 27;
+        //Calls response to indicate if the button chosen results in true or false answers
+        checkButton();
+        response (buttonClicked);
 		//Plays the sound of the chosen letter
 		playSound(letterSounds [letterOptions [buttonClicked - 1]],0.8f, 2);
 	}
@@ -377,13 +436,13 @@ public class InitialSounds: MonoBehaviour {
             isRight = true;
             congrat = 1;
             respons = true;
-            rounds = rounds - 1;
+            //rounds = rounds - 1;
             //if rounds=0 escape
         } else {
             isWrong = true;
 			congrat=2;
 			respons = false;
-			score=1;
+			//score=1;
 		}
 	}
 
@@ -392,8 +451,6 @@ public class InitialSounds: MonoBehaviour {
     //Plays Sounds
     void playSound(AudioClip sound, float vol, int version)
 	{
-		//Assigns an audio source	
-		playAud = gameObject.AddComponent<AudioSource> ();
 
 		//Assigns Clip and Volume then plays sound
 			playAud.clip = sound;
@@ -408,30 +465,33 @@ public class InitialSounds: MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-		//If any of the letter buttons have been clicked (true) check the buttons correctness
-		if (b1 == true || b2 == true || b3 == true || b4 == true) {
-			checkCorrectness();
-		}
-		/*If the audio has stopped playing and letter is true
-		(a letter sound was played and the one chosen was correct) reset letter to false 
-		and set a new random word using SetRandom()*/
-		if(!playAud.isPlaying){
-			if(congrat==1){
-				congrat=Random.Range(0, 9);
-				playSound(Yay[congrat], 0.8f, 1);
-				congrat=0;
-			}
-			else if(congrat==2){
-				congrat=Random.Range(0, 6);
-				playSound(Nay[congrat], 0.8f, 1);
-				congrat=0;
-			}
-			else if (congrat==0 && respons == true) {
-				SetRandom ();
-				respons=false;
-			}
-		}
+        test += 1;
+        
+          
+          
+            /*If the audio has stopped playing and letter is true
+            (a letter sound was played and the one chosen was correct) reset letter to false 
+            and set a new random word using SetRandom()*/
+            if (!playAud.isPlaying)
+            {
+                if (congrat == 1)
+                {
+                    congrat = Random.Range(0, 9);
+                    playSound(Yay[congrat], 0.8f, 1);
+                    congrat = 0;
+                }
+                else if (congrat == 2)
+                {
+                    congrat = Random.Range(0, 6);
+                    playSound(Nay[congrat], 0.8f, 1);
+                    congrat = 0;
+                }
+                else if (congrat == 0 && respons == true)
+                {
+                    SetRandom();
+                    respons = false;
+                }
+            }
 	}
 
     void OnDestroy()

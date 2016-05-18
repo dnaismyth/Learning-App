@@ -25,7 +25,7 @@ public class VowelSounds: MonoBehaviour {
 	public Texture[]Words2;
 
 	public int prev;
-	
+    public int buttonClicked = 27;
 	//Border Image
 	public Texture border;
 	//Arrays to hold Sounds for Words and Individual Letters
@@ -73,7 +73,7 @@ public class VowelSounds: MonoBehaviour {
 	//Checks if congrat audio should be played 0=no, 1=yay sound, 2=nay sound
 	public int congrat;
 	//Holds Skip Icon Texture
-	public Texture skip;
+	//public Texture skip;
 	//Holds replay Icon Texture
 	public Texture replay;
 	
@@ -81,7 +81,7 @@ public class VowelSounds: MonoBehaviour {
     void Awake()
     {
 
-        PlayerPrefs.SetInt("currentGame", 10);       // set the current game to the appropriate scene, this will be used to pass throug
+        PlayerPrefs.SetInt("currentGame", 11);       // set the current game to the appropriate scene, this will be used to pass throug
         PlayerPrefs.Save();                                           // to the letters option
         initializeUsable();
         Debug.Log("Itchy mode: " + PlayerPrefs.GetInt("itchyMode"));
@@ -144,23 +144,30 @@ public class VowelSounds: MonoBehaviour {
 			SetRandom();
 		}
 
+
+        //If any of the letter buttons have been clicked (true) check the buttons correctness
+        if (b1 == true || b2 == true || b3 == true || b4 == true)
+        {
+            checkCorrectness();
+        }
+
         GUI.skin = skin;
         skin.button.normal.background = buttonNormal;
         skin.button.hover.background = buttonActive;
         //Option Buttons b1-b4
         if (itchyMode == true) {
-			b1 = GUI.Button (new Rect (Screen.width / 4.1f, Screen.height / 10, 150, 150), pictureLetters[letterOptions[0]]);
-			b2 = GUI.Button (new Rect (Screen.width / 1.6f, Screen.height / 10, 150, 150), pictureLetters[letterOptions[1]]);
-			b3 = GUI.Button (new Rect (Screen.width / 4.1f, Screen.height / 1.5f, 150, 150), pictureLetters[letterOptions[2]]);
-			b4 = GUI.Button (new Rect (Screen.width / 1.6f, Screen.height / 1.5f, 150, 150), pictureLetters[letterOptions[3]]);
+			b1 = GUI.Button (new Rect (Screen.width / 4.1f, Screen.height / 10, Screen.width / 7, Screen.height / 4.5f), pictureLetters[letterOptions[0]]);
+			b2 = GUI.Button (new Rect (Screen.width / 1.6f, Screen.height / 10, Screen.width / 7, Screen.height / 4.5f), pictureLetters[letterOptions[1]]);
+			b3 = GUI.Button (new Rect (Screen.width / 4.1f, Screen.height / 1.5f, Screen.width / 7, Screen.height / 4.5f), pictureLetters[letterOptions[2]]);
+			b4 = GUI.Button (new Rect (Screen.width / 1.6f, Screen.height / 1.5f, Screen.width / 7, Screen.height / 4.5f), pictureLetters[letterOptions[3]]);
 		} else {
-			b1 = GUI.Button (new Rect (Screen.width / 4.1f, Screen.height / 10, 150, 150), fontLetters[letterOptions[0]]);
-			b2 = GUI.Button (new Rect (Screen.width / 1.6f, Screen.height / 10, 150, 150), fontLetters[letterOptions[1]]);
-			b3 = GUI.Button (new Rect (Screen.width / 4.1f, Screen.height / 1.5f, 150, 150), fontLetters[letterOptions[2]]);
-			b4 = GUI.Button (new Rect (Screen.width / 1.6f, Screen.height / 1.5f, 150, 150), fontLetters[letterOptions[3]]);
+			b1 = GUI.Button (new Rect (Screen.width / 4.1f, Screen.height / 10, Screen.width / 7, Screen.height / 4.5f), fontLetters[letterOptions[0]]);
+			b2 = GUI.Button (new Rect (Screen.width / 1.6f, Screen.height / 10, Screen.width / 7, Screen.height / 4.5f), fontLetters[letterOptions[1]]);
+			b3 = GUI.Button (new Rect (Screen.width / 4.1f, Screen.height / 1.5f, Screen.width / 7, Screen.height / 4.5f), fontLetters[letterOptions[2]]);
+			b4 = GUI.Button (new Rect (Screen.width / 1.6f, Screen.height / 1.5f, Screen.width / 7, Screen.height / 4.5f), fontLetters[letterOptions[3]]);
 		}
 		
-		b5 = GUI.Button (new Rect (480, 300, 75, 50), skip);
+	//	b5 = GUI.Button (new Rect (480, 300, 75, 50), skip);
 
         GUI.skin = imageSkin;
         imageSkin.button.normal.background = (Texture2D)temp;
@@ -176,11 +183,13 @@ public class VowelSounds: MonoBehaviour {
             StartCoroutine(waitForSeconds(1.5f));
         }
         //Creates Word Image
-        b6 = GUI.Button(new Rect(Screen.width / 2.4f, Screen.height / 2.9f, 200, 200), replay);
+        b6 = GUI.Button(new Rect(Screen.width / 2.5f, Screen.height / 2.99f, Screen.width / 4.6f, Screen.height / 3), replay);
 		//GUI.DrawTexture(new Rect(Screen.width / 2.4f, Screen.height / 2.9f, 200, 200), temp, ScaleMode.ScaleToFit, true, 1.0F);
 		//Creates surrounding border
-		GUI.DrawTexture(new Rect(Screen.width / 2.4f, Screen.height / 2.9f, 200, 200), border, ScaleMode.ScaleToFit, true, 1.0F);
-	}
+		GUI.DrawTexture(new Rect(Screen.width / 2.5f, Screen.height / 2.99f, Screen.width / 4.6f, Screen.height / 3), border, ScaleMode.StretchToFill, true, 1.0F);
+
+
+    }
 
     IEnumerator waitForSeconds(float sec)
     {
@@ -191,7 +200,7 @@ public class VowelSounds: MonoBehaviour {
 
     public void loadMenu()
     {
-        SceneManager.LoadScene(11);
+        SceneManager.LoadScene(0);
 
     }
 
@@ -292,32 +301,44 @@ public class VowelSounds: MonoBehaviour {
 		}
 		
 	}
-	
-	//Checks that the correct answer was selected
-	void checkCorrectness()
+
+    void checkButton()
+    {
+
+        //Checks boolean values to determine which button was clicked
+        if (b1 == true)
+        {
+            buttonClicked = 1;
+
+        }
+        if (b2 == true)
+        {
+            buttonClicked = 2;
+
+        }
+        if (b3 == true)
+        {
+            buttonClicked = 3;
+
+        }
+        if (b4 == true)
+        {
+            buttonClicked = 4;
+
+        }
+        //Resets Boolean Values
+        b1 = false;
+        b2 = false;
+        b3 = false;
+        b4 = false;
+    }
+
+    //Checks that the correct answer was selected
+    void checkCorrectness()
 	{
-		//Placeholder value
-		int buttonClicked = 27;
-		
-		//Checks boolean values to determine which button was clicked
-		if (b1 == true) {
-			buttonClicked = 1;
-		}
-		if (b2 == true) {
-			buttonClicked = 2;
-		}
-		if (b3 == true) {
-			buttonClicked = 3;
-		}
-		if (b4 == true) {
-			buttonClicked = 4;
-		}
-		//Resets Boolean Values
-		b1=false;
-		b2=false;
-		b3=false;
-		b4=false;
-		
+
+
+        checkButton();
 		//Calls response to indicate if the button chosen results in true or false answers
 		response (buttonClicked);
 		//Plays the sound of the chosen letter
@@ -365,10 +386,7 @@ public class VowelSounds: MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-		//If any of the letter buttons have been clicked (true) check the buttons correctness
-		if (b1 == true || b2 == true || b3 == true || b4 == true) {
-			checkCorrectness();
-		}
+	
 		/*If the audio has stopped playing and letter is true
 		(a letter sound was played and the one chosen was correct) reset letter to false 
 		and set a new random word using SetRandom()*/

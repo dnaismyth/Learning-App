@@ -10,7 +10,7 @@ using System.Collections;
 public class settingsMouse : MonoBehaviour {
 	SpriteRenderer sprite;
     [SerializeField]
-    private letterSettings settings = new letterSettings();
+    public letterSettings settings;
     [SerializeField] private GameObject letter;
 	private selectAll allSelected = new selectAll(); // initialize an instance of the selectAll class
     private int id;

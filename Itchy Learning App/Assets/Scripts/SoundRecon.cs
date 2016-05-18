@@ -129,7 +129,7 @@ public class SoundRecon : MonoBehaviour {
 
     public void loadMenu()
     {
-        SceneManager.LoadScene(11);
+        SceneManager.LoadScene(0);
 
     }
 

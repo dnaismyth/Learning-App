@@ -6,12 +6,12 @@ public class ItchyMode : MonoBehaviour
 
     public Color highlightColor = Color.white;
     //public initialsound_settings settings;
-    static bool selectAllLetters = true;
+    //static bool selectAllLetters = true;
 
 
     void Start()
     {
-        SpriteRenderer sprite = GetComponent<SpriteRenderer>();
+        //SpriteRenderer sprite = GetComponent<SpriteRenderer>();
         if(PlayerPrefs.GetInt("itchyMode") == 1)
         {
             this.GetComponent<SpriteRenderer>().color = Color.grey;

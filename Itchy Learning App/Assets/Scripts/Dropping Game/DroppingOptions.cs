@@ -27,7 +27,7 @@ public class DroppingOptions : MonoBehaviour {
     {
         yield return new WaitForSeconds(2.0f);
         //audioVolume -= 0.1 * Time.deltaTime; // update this to have the sound fade out when exiting the scene
-        SceneManager.LoadScene(3);
+        SceneManager.LoadScene(4);
 
     }
 }

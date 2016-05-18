@@ -16,11 +16,28 @@ public class ButtonScroll : MonoBehaviour
 
     void Awake()
     {
+        for(int i = 0; i <= 25; i++)
+        {
+            PlayerPrefs.SetInt("initial_letter" + i, i);
+            PlayerPrefs.SetInt("letter" + i, i);
+        }
+        for(int j = 0; j <=4; j++)
+        {
+            PlayerPrefs.SetInt("vowel_letter" + j, j);
+        }
+        for(int k = 0; k <= 11; k++)
+        {
+
+            PlayerPrefs.SetInt("final_letter" + k, k);
+          
+        }
         /*Vector3 temp = this.transform.position;
         temp.y = -3;
         buttons.transform.position = temp;*/
         initialPosition = buttons.transform.position;
         createButtons();
+        PlayerPrefs.Save();
+   
     }
 
     void Start()
@@ -96,6 +113,13 @@ public class ButtonScroll : MonoBehaviour
                 bPos[i].y = myPos.y;        // return to the original position
             }
         }      
+    }
+
+    void OnDestroy()
+    {
+        
+        PlayerPrefs.Save();
+      
     }
 
 }

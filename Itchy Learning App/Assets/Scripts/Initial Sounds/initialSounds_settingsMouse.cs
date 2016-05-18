@@ -62,8 +62,10 @@ public class initialSounds_settingsMouse : MonoBehaviour {
         id = letterId;
         thisLetter = l_name;
         GetComponent<SpriteRenderer>().sprite = image;
-
+ 
     }
+
+    
 }
 
 

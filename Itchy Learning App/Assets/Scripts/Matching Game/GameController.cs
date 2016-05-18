@@ -46,7 +46,11 @@ public class GameController : MonoBehaviour {
 	
     // Use this for initialization
     void Start () {
-		//print ("Test -1 setting: " + PlayerPrefs.GetInt ("letter20"));
+        for (int i = 0; i < 26; i++)
+        {
+            Debug.Log("These are my player prefs " + PlayerPrefs.GetInt("letter" + i));
+        }
+        //print ("Test -1 setting: " + PlayerPrefs.GetInt ("letter20"));
         //print("list size: " + userSettings.getListSize());
         getUserChoices();
         //userSettings = GetComponent<letterSettings>();
@@ -59,7 +63,7 @@ public class GameController : MonoBehaviour {
 
     public void loadMenu()
     {
-        SceneManager.LoadScene(11);
+        SceneManager.LoadScene(0);
 
     }
 
@@ -279,13 +283,13 @@ public class GameController : MonoBehaviour {
 		}
 
 		for (int i = 0; i < inputPictures.Count; i ++) {
-			float posXX = startPosPictures.x + ((i) % gridCols) * offsetX;
+            float posXX = startPosPictures.x + ((i) % gridCols) * offsetX/1.25f;
 			float posYY = startPosPictures.y + (int)Mathf.Floor((float)(i) / gridCols) * -offsetY;
 			// handle the sizing of the letters to fit on screen if there is more than 18
 			if (inputPictures.Count >= 18) {
 				gridCols = 6;
 				inputPictures[i].transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
-				posXX = startPosPictures.x + ((i) % gridCols) * offsetX/(1.2f);
+                posXX = startPosPictures.x + ((i) % gridCols) * offsetX/(1.47f);
 				posYY = startPosPictures.y + (int)Mathf.Floor((float)(i) / gridCols) * -offsetY/(1.2f);
 			}
             if (inputPictures.Count % 6 != 0)
@@ -300,13 +304,13 @@ public class GameController : MonoBehaviour {
 
 
 		for(int j = 0; j < inputLetters.Count; j++){
-			float posX = startPosLetters.x + (j % gridCols) * offsetX;
+			float posX = startPosLetters.x + (j % gridCols) * offsetX/1.25f;
 			float posY = startPosLetters.y + (int)Mathf.Floor((float)(j) / gridCols) * -offsetY;
 			// Handle the sizing of the letters to fit on screen if there is more than 18
 			if (inputLetters.Count >= 18){
 				gridCols = 6;
 				inputLetters[j].transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
-				posX = startPosLetters.x + (j % gridCols) * offsetX/(1.2f);
+				posX = startPosLetters.x + (j % gridCols) * offsetX/(1.47f);
 				posY = startPosLetters.y + (int)Mathf.Floor((float)(j)/gridCols)* -offsetY/(1.2f);
 			}
 

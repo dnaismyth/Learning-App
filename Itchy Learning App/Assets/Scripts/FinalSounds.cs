@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 //[RequireComponent(typeof(AudioSource))]
 public class FinalSounds: MonoBehaviour {
@@ -77,7 +78,10 @@ public class FinalSounds: MonoBehaviour {
 	void Start()
 	{
 		//Initializes usable letters
-		
+		for(int i = 0; i <= 25; i++)
+        {
+           // PlayerPrefs.SetInt("final_letter" + i, -1);
+        }
 		//Initializes level
 		level = 1;
         //Initializes Itchy Mode
@@ -96,16 +100,44 @@ public class FinalSounds: MonoBehaviour {
 		SetRandom ();
 	}
 
+    public void loadMenu()
+    {
+        SceneManager.LoadScene(0);
+
+    }
+
     void Awake()
     {
-
-        PlayerPrefs.SetInt("currentGame", 4);       // set the current game to the appropriate scene, this will be used to pass throug
+        for (int i = 0; i <= 11; i++)
+        {
+            Debug.Log(PlayerPrefs.GetInt("final_letter" + i));
+        }
+        //Assigns an audio source	
+        playAud = gameObject.AddComponent<AudioSource>();
+        PlayerPrefs.SetInt("currentGame", 5);       // set the current game to the appropriate scene, this will be used to pass throug
         PlayerPrefs.Save();                                           // to the letters option
+        Debug.Log("Checking letters final sounds: " + PlayerPrefs.GetInt("final_letter1"));
+        Debug.Log("final_letter" + 1);
         initializeUsable();
     }
-	
-	//Creates Buttons
-	void OnGUI()
+
+    void initializeUsable()
+    {
+        //Debug current letters player has picked
+        for (int i = 0; i <= 25; i++)
+        {
+            int letterId = PlayerPrefs.GetInt("final_letter" + i);
+
+            if (letterId != -1)
+            {
+                usable[letterId] = true;
+            }
+
+        }
+    }
+
+    //Creates Buttons
+    void OnGUI()
 	{
 		//Holds new Word Texture
 		Texture temp = Words1 [ranDisplay];
@@ -162,30 +194,10 @@ public class FinalSounds: MonoBehaviour {
 
         //GUI.DrawTexture(new Rect(Screen.width/2.5f, Screen.height/3.5f, 200, 200), temp, ScaleMode.ScaleToFit, true, 1.0F);
         //Creates surrounding border
-        GUI.DrawTexture(new Rect(Screen.width / 2.4f, Screen.height / 2.9f, 200, 200), border, ScaleMode.ScaleToFit, true, 1.0F);
+        GUI.DrawTexture(new Rect(Screen.width / 2.4f, Screen.height / 2.9f, 200, 200), border, ScaleMode.StretchToFill, true, 1.0F);
     }
 
-    void initializeUsable()
-    {
-        //Debug current letters player has picked
-        for (int i = 0; i <= 25; i++)
-        {
-            int letterId = PlayerPrefs.GetInt("initial_letter" + i);
-            if (/*letterId != null &&*/ letterId != -1)  // user has selected specific letters to be chosen, therefore default will not be used (all letters)
-            {
-                Debug.Log("CURRENT LETTER ID CHOSEN: " + letterId);
-                usable[letterId] = true;
-                userChoices = true;
-                Debug.Log(usable[i]);
-            }
-            else if (userChoices == false)
-            {
-                usable[i] = true;      // if user has not selected specific letters, set them all to be used as default
-            }
 
-
-        }
-    }
 
     IEnumerator waitForSeconds(float sec)
     {
@@ -378,8 +390,6 @@ public class FinalSounds: MonoBehaviour {
     //Plays Sounds
     void playSound(AudioClip sound, float vol, int version)
 	{
-		//Assigns an audio source	
-		playAud = gameObject.AddComponent<AudioSource> ();
 		
 		//Assigns Clip and Volume then plays sound
 		playAud.clip = sound;

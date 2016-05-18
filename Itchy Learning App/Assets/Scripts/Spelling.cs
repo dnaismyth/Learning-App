@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Spelling : MonoBehaviour {
 
@@ -72,6 +73,8 @@ public class Spelling : MonoBehaviour {
 
     void Awake()
     {
+        //Assigns an audio source	
+        playAud = gameObject.AddComponent<AudioSource>();
         PlayerPrefs.SetInt("currentGame", 9);       // set the current game to the appropriate scene, this will be used to pass throug
         PlayerPrefs.Save();
     }
@@ -109,11 +112,11 @@ public class Spelling : MonoBehaviour {
             /*b2 = GUI.Button(new Rect(200, 0, 200, 200), replay);
 			GUI.DrawTexture(new Rect(200, 0, 200, 130), Word[ranDisplay]);*/
             //Creates Word Image
-            
-            b2 = GUI.Button(new Rect(Screen.width / 2.6f, 15, 250, 250), replay);
-            GUI.DrawTexture(new Rect(Screen.width / 2.5f, 150, 100, 65), let1);
-			GUI.DrawTexture(new Rect(Screen.width / 2.2f, 150, 65, 65), let2);
-			GUI.DrawTexture(new Rect(Screen.width / 1.9f, 150, 65, 65), let3);
+
+            b2 = GUI.Button(new Rect(Screen.width / 2.6f, Screen.height/15, Screen.width / 4.4f, Screen.height / 2.8f), replay);
+            GUI.DrawTexture(new Rect(Screen.width / 2.5f, Screen.height / 20, Screen.width / 17.1f, Screen.height / 10.66f), let1, ScaleMode.ScaleToFit);
+			GUI.DrawTexture(new Rect(Screen.width / 2.2f, Screen.height /20, Screen.width / 17.1f, Screen.height / 10.66f), let2, ScaleMode.ScaleToFit);
+			GUI.DrawTexture(new Rect(Screen.width / 1.9f, Screen.height / 20, Screen.width / 17.1f, Screen.height / 10.66f), let3, ScaleMode.ScaleToFit);
 		}
 		else if (level == 2) {
 			if(three==1||Hinted)
@@ -121,40 +124,40 @@ public class Spelling : MonoBehaviour {
                 //Creates Word Image
            
                
-                b2 = GUI.Button(new Rect(Screen.width / 2.45f, 15, 250, 250), replay);
+                b2 = GUI.Button(new Rect(Screen.width / 2.6f, Screen.height / 15, Screen.width / 4.4f, Screen.height / 2.8f), replay);
 
-                GUI.DrawTexture(new Rect(Screen.width / 2.5f, 150, 65, 65), let1);
-				GUI.DrawTexture(new Rect(Screen.width / 2.2f, 150, 65, 65), let2);
-				GUI.DrawTexture(new Rect(Screen.width / 1.9f, 150, 65, 65), let3);
+                GUI.DrawTexture(new Rect(Screen.width / 2.5f, Screen.height/10, Screen.width / 17.1f, Screen.height / 10.66f), let1);
+				GUI.DrawTexture(new Rect(Screen.width / 2.2f, Screen.height/10, Screen.width / 17.1f, Screen.height / 10.66f), let2);
+				GUI.DrawTexture(new Rect(Screen.width / 1.9f, Screen.height/10, Screen.width / 17.1f, Screen.height / 10.66f), let3);
 			}
 			else
 			{
                 //Creates Word Image
                  //Creates Word Image
              
-                b2 = GUI.Button(new Rect(Screen.width / 2.45f, 15, 250, 250), replay);
+                b2 = GUI.Button(new Rect(Screen.width / 2.6f, Screen.height / 15, Screen.width / 4.4f, Screen.height / 2.8f), replay);
 
-                GUI.DrawTexture(new Rect(Screen.width / 2.5f, 150, 65, 65), let1);
-				GUI.DrawTexture(new Rect(Screen.width / 2.2f, 150, 65, 65), let2);
-				GUI.DrawTexture(new Rect(Screen.width / 1.9f, 150, 65, 65), let3);
+                GUI.DrawTexture(new Rect(Screen.width / 2.5f, Screen.height / 10, Screen.width / 17.1f, Screen.height / 10.66f), let1);
+				GUI.DrawTexture(new Rect(Screen.width / 2.2f, Screen.height / 10, Screen.width / 17.1f, Screen.height / 10.66f), let2);
+				GUI.DrawTexture(new Rect(Screen.width / 1.9f, Screen.height / 10, Screen.width / 17.1f, Screen.height / 10.66f), let3);
 			}
 		}
 		else if (level == 3) {
             //Creates Word Image
-            b2 = GUI.Button(new Rect(Screen.width / 2.45f, 10, 200, 200), replay);
-            GUI.DrawTexture(new Rect(Screen.width/2.45f, 10, 200, 130), Word[ranDisplay]);
+            b2 = GUI.Button(new Rect(Screen.width / 2.6f, Screen.height/15, Screen.width / 4.4f, Screen.height / 2.8f), replay);
+            GUI.DrawTexture(new Rect(Screen.width/2.45f, Screen.height/14, Screen.width/5.5f, Screen.height/5.2f), Word[ranDisplay]);
 
 			if(one==1||Hinted==true)
 			{
-				GUI.DrawTexture(new Rect(Screen.width / 2.5f, 145, 65, 65), let1);
+				GUI.DrawTexture(new Rect(Screen.width / 2.5f, Screen.height/3.5f, Screen.width/17.1f, Screen.height/10.66f), let1);
 			}
 			if(two==1||Hinted==true)
 			{
-				GUI.DrawTexture(new Rect(Screen.width / 2.2f, 145, 65, 65), let2);
+				GUI.DrawTexture(new Rect(Screen.width / 2.2f, Screen.height / 3.5f, Screen.width / 17.1f, Screen.height / 10.66f), let2);
 			}
 			if(three==1||Hinted==true)
 			{
-				GUI.DrawTexture(new Rect(Screen.width / 1.9f, 145, 65, 65), let3);
+				GUI.DrawTexture(new Rect(Screen.width / 1.9f, Screen.height / 3.5f, Screen.width / 17.1f, Screen.height / 10.66f), let3);
 			}
 		}
 
@@ -162,13 +165,13 @@ public class Spelling : MonoBehaviour {
 			playSound (wordSounds [ranDisplay], 0.8f);
 			newWord=-1;
 		}
-        int buttonSizeWidth = 60;
-        int buttonSizeHeight = 75;
-        int buttonSpacing = 3;
-        int xOffset = Screen.width / 6;
+        int buttonSizeWidth = Screen.width / 14;
+        float buttonSizeHeight = Screen.height / 8.5f;
+        int buttonSpacing = Screen.width / 110;
+        int xOffset = Screen.width / 30;
         int yOffset = Screen.height / 2;
-    
-		int numCols = 12;
+
+        int numCols = 12;
 		int InDeX = 0;
 		int numButtons = 26;
 		//float nextUse = 0f;
@@ -237,8 +240,9 @@ public class Spelling : MonoBehaviour {
 						{
 							let3=pictureLetters[Spell3[ranDisplay]];
 							three=1;
-						}
-						congrat=1;
+                            congrat = 1;
+                        }
+						
 					} else
 					{
 						playSound(letterSounds [InDeX],0.8f);
@@ -276,8 +280,9 @@ public class Spelling : MonoBehaviour {
 						{
 							let3=fontLetters[Spell3[ranDisplay]];
 							three=1;
-						}
-						congrat=1;
+                            congrat = 1;
+                        }
+						
 					} else
 					{
 						playSound(letterSounds [InDeX],0.8f);
@@ -294,7 +299,7 @@ public class Spelling : MonoBehaviour {
 
     public void loadMenu()
     {
-        SceneManager.LoadScene(11);
+        SceneManager.LoadScene(0);
 
     }
 
@@ -345,8 +350,6 @@ public class Spelling : MonoBehaviour {
 		if (playAud.isPlaying) {
 			playSound(sound, vol);
 		}
-		//Assigns an audio source	
-		playAud = gameObject.AddComponent<AudioSource> ();
 		
 		//Assigns Clip and Volume then plays sound
 		playAud.clip = sound;

@@ -2,15 +2,7 @@
 using System.Collections;
 
 public class MainMenuScript : MonoBehaviour {
-   /* private GameObject parent;
-
-    public GameObject stream1;
-    public GameObject stream2;
-    private Vector3 s1Pos;
-    private Vector3 s2Pos;
-    private Vector3 restart;
-    private bool scrolling = true;*/
-    // Use this for initialization
+  
     void Start()
     {
 
@@ -18,21 +10,13 @@ public class MainMenuScript : MonoBehaviour {
 
     void Awake()
     {
-        /*s1Pos = stream1.transform.position;
-        s2Pos = stream2.transform.position;
-
-        restart = new Vector3(s2Pos.x, s2Pos.y, s2Pos.z);       // store the second streams position before scrolling
-        Debug.Log(Screen.height);*/
+     
     }
 
     // Update is called once per frame
     void Update()
     {
-        /*if (scrolling == true)
-         {
-             streamPosition();
-
-         }*/
+     
         Renderer rend = GetComponent<Renderer>();
         rend.material.mainTextureOffset = new Vector2(0f, Time.time * 0.05f);
     }

@@ -22,39 +22,58 @@ public class letterSettings : MonoBehaviour {
 	private SpriteRenderer sprite;
 	public List<settingsMouse> allChoices = new List<settingsMouse>();
     public settingsMouse letter;
-    static List<int> userChoices = new List<int>(); // a list to store the id's of the letters in which they have chosen, will somehow need to pass this into the game scene. 
+    static List<int> userChoicesMem = new List<int>(); // a list to store the id's of the letters in which they have chosen, will somehow need to pass this into the game scene. (memory game)
     // Use this for initialization
 
     void Start () {
+        for (int i = 0; i < 26; i++)
+        {
+            Debug.Log("These are my player prefs " + PlayerPrefs.GetInt("letter" + i));
+        }
         createLetters();
-        print("here is letter1: " + PlayerPrefs.GetInt("letter1"));
-        //print("userchoices size: " + userChoices.Count);
-		foreach (int id in userChoices) {
-			print (id);
-		}
+        
+       
 	}
 
     public int getListSize()
     {
-        return userChoices.Count;
+        return userChoicesMem.Count;
     }
 
     
 
-	public void letterAppearance(settingsMouse thisLetter){
-		for (int i = 0; i <= 25; i++) {
-			int letterId = PlayerPrefs.GetInt ("letter" + i);
-			print ("Curr Letters" + letterId.ToString ());
-			if (thisLetter.getId() == letterId) {
+	private void letterAppearanceMemory(List<settingsMouse> choices){
+        Debug.Log("This is my count " + choices.Count);
+		for (int i = 0; i < choices.Count; i++) {
+            
+			if (PlayerPrefs.GetInt("letter" + i)!=-1) {
                 //GetComponent<SpriteRenderer>().sprite = letters[thisLetter.getId ()];
                 //this.sprite.color = Color.grey;
-                thisLetter.GetComponent<SpriteRenderer>().color = Color.grey;
-				thisLetter.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
+                choices[PlayerPrefs.GetInt("letter"+ i)].GetComponent<SpriteRenderer>().color = Color.grey;
+				choices[PlayerPrefs.GetInt("letter"+ i)].transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
 			}
 		}
 
 
 	}
+
+   /* public void letterAppearance(List<settingsMouse> avail)
+    {
+        for (int i = 0; i < avail.Count; i++)
+        {
+            Debug.Log("Avail: " + avail[i].getId() + "Here is my pref " + PlayerPrefs.GetInt("initial_letter" + i));
+            if (PlayerPrefs.GetInt(playerPrefName + i) != -1)
+            {
+                avail[PlayerPrefs.GetInt(playerPrefName + i)].GetComponent<SpriteRenderer>().color = Color.grey;
+                avail[PlayerPrefs.GetInt(playerPrefName + i)].transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
+            }
+
+
+        }
+
+        //Debug.Log("These are my player prefs so far" +  PlayerPrefs.GetInt("initial_letter" + i));
+
+    }*/
 
     public void createLetters()
     {
@@ -94,42 +113,43 @@ public class letterSettings : MonoBehaviour {
             }
 
             letter.transform.position = new Vector3(posX, posY, startPos.z); // create a new position based on this offset for the newly instatiated card
-			letterAppearance (letter); // call the letterAppearance helper method to change how the letter is displayed if a user has already chosen it
             index++;
 
             
         }
-
+        Debug.Log("I am at the end of the loop about to call method");
+        letterAppearanceMemory(allChoices); // call the letterAppearance helper method to change how the letter is displayed if a user has already chosen it
     }
-	
-	public void onAllRemove(){
+
+    public void onAllRemove(){
 		foreach (settingsMouse card in allChoices) {
 			card.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
             card.GetComponent<SpriteRenderer>().color = Color.white;
-            PlayerPrefs.DeleteKey("letter" + card.getId());
-            PlayerPrefs.Save();
+            userChoicesMem.Remove(card.getId());
 
         }
+        PlayerPrefs.Save();
     }
 
+  
 
     public void lettersChosen(settingsMouse letter)
 	{
 
-        if (!userChoices.Contains(letter.getId()))
+        if (!userChoicesMem.Contains(letter.getId()))
         {
-            userChoices.Add(letter.getId());
+            userChoicesMem.Add(letter.getId());
             isEmpty = false;
 			alreadyChosen = false;
         }
-        else if (userChoices.Contains(letter.getId()))
+        else if (userChoicesMem.Contains(letter.getId()))
         {
 			alreadyChosen = true;
 			PlayerPrefs.DeleteKey ("letter" + letter.getId ());
-            userChoices.Remove(letter.getId());
+            userChoicesMem.Remove(letter.getId());
 			PlayerPrefs.Save ();
         }
-        else if (userChoices.Count == 0)
+        else if (userChoicesMem.Count == 0)
         {
             isEmpty = true; // this variable will be passed into the playbutton screen, if it is set to true, do not allow the user to continue to the game screen
         }
@@ -137,21 +157,22 @@ public class letterSettings : MonoBehaviour {
             
     }
 
-    public void saveUserPreferences()
+    private void saveUserPreferences()
     {
+        Debug.Log("HAHA I AM BEING CALLED");
 		int i = 0;
 
-        foreach (int id in userChoices)
+        foreach (int id in userChoicesMem)
         {
-                print("My Current Ids Chosen: " + id);
                 PlayerPrefs.SetInt("letter" + i, id);
             	i++;
         }
 		// Set the remaining choices to -1 so we know which ones to include when we pass them through to the next scene
 		//-1 will mean that there is still space left for these letters to be chosen
-		for (int numChoices = userChoices.Count; numChoices <= 25; numChoices++) {
+		for (int numChoices = userChoicesMem.Count; numChoices <= 25; numChoices++) {
 			PlayerPrefs.SetInt ("letter" + numChoices, -1);
 		}
+        PlayerPrefs.Save();
        
     }
 
@@ -167,8 +188,7 @@ public class letterSettings : MonoBehaviour {
 
 
     void OnDestroy(){
-        	saveUserPreferences();
-        PlayerPrefs.Save();
+        saveUserPreferences();
     }
 
 

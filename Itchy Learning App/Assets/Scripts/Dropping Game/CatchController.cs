@@ -34,17 +34,27 @@ public class CatchController : MonoBehaviour
     String pauseMessage = "";
     public GameObject menu; // Winning screen menu
     public AudioClip congratulations;   // sound to play when the user has won the game
+    public AudioClip niceTry;
+    private bool won = false;
+    private bool loss = false;
 
 
 
     //genereic waiting method we can use
     IEnumerator Wait(float wait)
     {
-        yield return new WaitForSeconds(wait);
-        playAudio.PlayOneShot(currImage.wordSounds[currImage.getIndex()]); // play the corresponding letter sound on drop
-        yield return new WaitForSeconds(wait);
-        playAudio.PlayOneShot(congratulations); // then play the congratulations message
-
+        if (won == true)
+        {
+            yield return new WaitForSeconds(wait);
+            playAudio.PlayOneShot(currImage.wordSounds[currImage.getIndex()]); // play the corresponding letter sound on drop
+            yield return new WaitForSeconds(wait);
+            playAudio.PlayOneShot(congratulations); // then play the congratulations message
+        }
+        else if (loss == true)
+        {
+            yield return new WaitForSeconds(wait);
+            playAudio.PlayOneShot(niceTry); // then play the congratulations message
+        }
     }
 
 
@@ -60,6 +70,7 @@ public class CatchController : MonoBehaviour
 
             if (imageClass.checkWinning(imageObjects) == true)
             {
+                won = true;
                 Debug.Log("You have won"); // will have to change this later to randomize a new image for a user to spell
                 pauseGame(); // pause the game for now, will include Jeff's winning screen
                 StartCoroutine(Wait(1.5f)); // wait 2 seconds and then replay the word they have just spelt
@@ -80,6 +91,8 @@ public class CatchController : MonoBehaviour
 
     void Awake()
     {
+        won = false;
+        loss = false;
         menu.SetActive(false); // start with the winning screen set to false (not showing)
         style = new GUIStyle();
         style2 = new GUIStyle();
@@ -314,22 +327,28 @@ public class CatchController : MonoBehaviour
     {
         if (lives == 0)
         {
+            loss = true;
            // dropper.pauseDropper();
             lives = 0;
             //isPlaying = false;
             Debug.Log("You lose"); // change this later, pause the game or redirect to a new screen asking if they want to play again
+            pauseGame(); // pause the game for now, will include Jeff's winning screen
+            StartCoroutine(Wait(1.5f)); // wait 2 seconds and then replay the word they have just spelt
+            menu.transform.FindChild("You Did It").gameObject.SetActive(false);
+            menu.SetActive(true);
+            fontReady = false; // hide font//
         }
     }
 
     public void loadMenu()
     {
-        SceneManager.LoadScene(11);
+        SceneManager.LoadScene(0);
 
     }
 
     public void playAgain()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(3);
 
     }
 }

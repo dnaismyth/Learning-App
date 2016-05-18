@@ -29,11 +29,11 @@ public class letterButton : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("currentGame") == 1)
         {
-          SceneManager.LoadScene(0);       //redirect to initialsoundssetting screen, if have time, change this later
+            SceneManager.LoadScene(2);      // load the settings for memory game
         }
         else
         {
-            SceneManager.LoadScene(6);
+            SceneManager.LoadScene(7);
         }
         transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
     }

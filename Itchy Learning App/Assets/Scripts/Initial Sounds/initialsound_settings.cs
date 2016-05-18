@@ -5,11 +5,11 @@ using System.Collections.Generic;
 public class initialsound_settings : MonoBehaviour {
 
     [SerializeField]
-    private Sprite[] letters; // array for the sprites assets to be added
-    [SerializeField] private
+    public Sprite[] letters; // array for the sprites assets to be added
+    [SerializeField] public
     Sprite[] finalLetters;      // array for the final sounds letters
     [SerializeField]
-    private Sprite[] vowelLetters;
+    public Sprite[] vowelLetters;
     [SerializeField]
     private initialSounds_settingsMouse originalCard; // reference for the card in the scene
     static bool isEmpty = false; // boolean to check if the user selections list is empty
@@ -21,7 +21,8 @@ public class initialsound_settings : MonoBehaviour {
     private string playerPrefName;
     private SpriteRenderer sprite;
     private int currentGame;        // store the current game
-    public List<initialSounds_settingsMouse> allChoices = new List<initialSounds_settingsMouse>();
+    public initialSounds_settingsMouse[] allChoices;
+    public List<initialSounds_settingsMouse> allLetterChoices = new List<initialSounds_settingsMouse>();
     public initialSounds_settingsMouse letter;
     static List<int> userChoices = new List<int>(); // a list to store the id's of the letters in which they have chosen, will somehow need to pass this into the game scene. 
     // Use this for initialization
@@ -29,14 +30,18 @@ public class initialsound_settings : MonoBehaviour {
     void Awake()
     {
         currentGame = PlayerPrefs.GetInt("currentGame");        // store the current game being played into a variable to determine letters
-        Debug.Log("This is the current game: " + currentGame);
+        //Debug.Log("This is the current game: " + currentGame);
+        for(int i = 0; i <=25; i++)
+        {
+            //Debug.Log("These are my current letters for IS "+ PlayerPrefs.GetInt("initial_letter" + i));
+        }
     }
 
     void Start()
     {
         
         
-        if (currentGame == 4)
+        if (currentGame == 5)
         {
             gridCols = 6;
             playerPrefName = "final_letter";   // use this as our reference for final letters
@@ -46,14 +51,14 @@ public class initialsound_settings : MonoBehaviour {
                // Debug.Log(PlayerPrefs.GetInt(playerPrefName + i));
             }
         }
-        else if (currentGame == 10)
+        else if (currentGame == 11)
         {
             playerPrefName = "vowel_letter";
             createVowels();
             gridCols = 6;
             // call the method to only create the vowel letters
         }
-        else if(currentGame == 5)
+        else if(currentGame == 6)
         {
             playerPrefName = "initial_letter";
             createAllLetters();
@@ -79,38 +84,83 @@ public class initialsound_settings : MonoBehaviour {
 
 
 
-    public void letterAppearance(initialSounds_settingsMouse thisLetter, Sprite [] array)
+    private void letterAppearance(List<initialSounds_settingsMouse> avail)
     {
-        for (int i = 0; i <= array.Length; i++)
+        for (int i = 0; i < avail.Count; i++)
         {
-            //Debug.Log(playerPrefName + i);
-            int let = PlayerPrefs.GetInt(playerPrefName + i);
-            Debug.Log("Let: " + let);
-            Debug.Log("This letter: " + thisLetter.getId());
-            if (thisLetter.getId() == let && let != -1)
+            Debug.Log("Avail: " + avail[i].getId() + "Here is my pref " + PlayerPrefs.GetInt("initial_letter" + i));
+            if (PlayerPrefs.GetInt(playerPrefName + i) != -1)
             {
-                thisLetter.GetComponent<SpriteRenderer>().color = Color.grey;
-
-                thisLetter.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
+                avail[PlayerPrefs.GetInt(playerPrefName + i)].GetComponent<SpriteRenderer>().color = Color.grey;
+                avail[PlayerPrefs.GetInt(playerPrefName + i)].transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
             }
-            else
-            {
-                thisLetter.GetComponent<SpriteRenderer>().color = Color.grey;
+            
 
-                thisLetter.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
-            }
-
-        
         }
 
+            //Debug.Log("These are my player prefs so far" +  PlayerPrefs.GetInt("initial_letter" + i));
 
+        }
+
+    private void finalLetterAppearance(List<initialSounds_settingsMouse> avail)
+    {
+        int index = 0;
+        int finalId = 0;
+        if (index == 0)
+        {
+            finalId = 1;
+        }
+        else if (index == 1)
+        {
+            finalId = 2;
+        }
+        else if (index == 2)
+        {
+            finalId = 5;
+        }
+        else if (index == 3)
+        {
+            finalId = 6;
+        }
+        else if (index == 4)
+        {
+            finalId = 11;
+        }
+        else if (index == 5)
+        {
+            finalId = 13;
+        }
+        else if (index == 6)
+        {
+            finalId = 17;
+        }
+        else if (index == 7)
+        {
+            finalId = 18;
+        }
+        else if (index == 8)
+        {
+            finalId = 19;
+        }
+        else if (index == 9)
+        {
+            finalId = 23;
+        }
+        else if (index == 10)
+        {
+            finalId = 12;
+        }
+        else if (index == 11)
+        {
+            finalId = 3;
+        }
     }
+
 
 
 
     public void createAllLetters()
     {
-
         Vector3 startPos = originalCard.transform.position; // position of the first card, all cards will be offset from here
 
         int index = 0;
@@ -132,9 +182,9 @@ public class initialsound_settings : MonoBehaviour {
 
             //setLetter from the settingsMouse class, using the sprites provides and creating an id based on the i-iteration
             letter.setLetter(letters[index], i, letters[index].name);
-            allChoices.Add(letter); // add all of the letters into a list 
-                                    //print("My Curr Choices: " + theseLetters[i]);
-
+            // allChoices[i] = letter; // add all of the letters into a list 
+            //print("My Curr Choices: " + theseLetters[i]);
+            allLetterChoices.Add(letter);
             float posX = startPos.x + (i % gridCols) * offsetX;
             float posY = startPos.y + (int)Mathf.Floor((float)i / gridCols) * -offsetY;
             letter.transform.position = new Vector3(posX, posY, startPos.z); // create a new position based on this offset for the newly instatiated card
@@ -148,21 +198,73 @@ public class initialsound_settings : MonoBehaviour {
             }
 
             letter.transform.position = new Vector3(posX, posY, startPos.z); // create a new position based on this offset for the newly instatiated card
-            letterAppearance(letter, letters); // call the letterAppearance helper method to change how the letter is displayed if a user has already chosen it
+           
+            //letterAppearance(letter, letters); // call the letterAppearance helper method to change how the letter is displayed if a user has already chosen it
             index++;
-
+            
 
         }
-
+        
+        letterAppearance(allLetterChoices);
     }
 
     public void createFinalLetters()
     {
+
         Vector3 startPos = new Vector3(-3, originalCard.transform.position.y, originalCard.transform.position.z); // position of the first card, all cards will be offset from here
 
         int index = 0;
+        int finalId = 0;
         for (int i = 0; i < finalLetters.Length; i++)
         {
+            if (index == 0)
+            {
+                finalId = 1;
+            }
+            else if (index == 1)
+            {
+                finalId = 2;
+            }
+            else if (index == 2)
+            {
+                finalId = 5;
+            }
+            else if (index == 3)
+            {
+                finalId = 6;
+            }
+            else if (index == 4)
+            {
+                finalId = 11;
+            }
+            else if (index == 5)
+            {
+                finalId = 13;
+            }
+            else if (index == 6)
+            {
+                finalId = 17;
+            }
+            else if (index == 7)
+            {
+                finalId = 18;
+            }
+            else if (index == 8)
+            {
+                finalId = 19;
+            }
+            else if (index == 9)
+            {
+                finalId = 23;
+            }
+            else if (index == 10)
+            {
+                finalId = 12;
+            }
+            else if (index == 11)
+            {
+               finalId = 3;
+            }
 
 
             if (i == 0)
@@ -176,8 +278,8 @@ public class initialsound_settings : MonoBehaviour {
 
 
             //setLetter from the settingsMouse class, using the sprites provides and creating an id based on the i-iteration
-            letter.setLetter(finalLetters[index], i, finalLetters[index].name);
-            allChoices.Add(letter); // add all of the letters into a list 
+            letter.setLetter(finalLetters[index], finalId, finalLetters[index].name);
+            allLetterChoices.Add(letter);
                                     //print("My Curr Choices: " + theseLetters[i]);
 
             float posX = startPos.x + (i % gridCols) * offsetX;
@@ -193,13 +295,15 @@ public class initialsound_settings : MonoBehaviour {
             }
 
             letter.transform.position = new Vector3(posX, posY, startPos.z); // create a new position based on this offset for the newly instatiated card
-            letterAppearance(letter, finalLetters); // call the letterAppearance helper method to change how the letter is displayed if a user has already chosen it
+            //letterAppearance(letter, finalLetters); // call the letterAppearance helper method to change how the letter is displayed if a user has already chosen it
             index++;
         }
+        letterAppearance(allLetterChoices);
     }
 
     public void createVowels()
     {
+
         Vector3 startPos = new Vector3(-3, originalCard.transform.position.y, originalCard.transform.position.z); // position of the first card, all cards will be offset from here
 
         int index = 0;
@@ -219,7 +323,7 @@ public class initialsound_settings : MonoBehaviour {
 
             //setLetter from the settingsMouse class, using the sprites provides and creating an id based on the i-iteration
             letter.setLetter(vowelLetters[index], i, vowelLetters[index].name);
-            allChoices.Add(letter); // add all of the letters into a list 
+            allLetterChoices.Add(letter);
                                     //print("My Curr Choices: " + theseLetters[i]);
 
             float posX = startPos.x + (i % gridCols) * offsetX;
@@ -235,26 +339,25 @@ public class initialsound_settings : MonoBehaviour {
             }
 
             letter.transform.position = new Vector3(posX, posY, startPos.z); // create a new position based on this offset for the newly instatiated card
-            letterAppearance(letter, vowelLetters); // call the letterAppearance helper method to change how the letter is displayed if a user has already chosen it
             index++;
         }
+        letterAppearance(allLetterChoices);
     }
 
     public void onAllRemove()
     {
-        foreach (initialSounds_settingsMouse card in allChoices)
+        
+        Debug.Log("I am clicked");
+        foreach (initialSounds_settingsMouse card in allLetterChoices)
         {
 
             card.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
             card.GetComponent<SpriteRenderer>().color = Color.white;
             userChoices.Remove(card.getId());
 
-            for (int i = 0; i < 25; i++)
-            {
-                PlayerPrefs.DeleteKey(getPlayerPrefName() + i); // change this to delete key
-            }
         }
-        
+        Debug.Log("This is the length of all choices: " + allLetterChoices.Count);
+       
         PlayerPrefs.Save();
     }
 
@@ -272,7 +375,9 @@ public class initialsound_settings : MonoBehaviour {
         {
             alreadyChosen = true;
             PlayerPrefs.DeleteKey(playerPrefName + letter.getId());
+            //Debug.Log("Deleted this key: " + playerPrefName + letter.getId());
             userChoices.Remove(letter.getId());
+            //Debug.Log("Testing if we have this " + userChoices.Contains(letter.getId()));
             PlayerPrefs.Save();
         }
         else if (userChoices.Count == 0)
@@ -283,7 +388,7 @@ public class initialsound_settings : MonoBehaviour {
 
     }
 
-    public void saveUserPreferences()
+    private void saveUserPreferences()
     {
         int i = 0;
 

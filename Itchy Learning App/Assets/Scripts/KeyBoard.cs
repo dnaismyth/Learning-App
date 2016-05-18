@@ -55,6 +55,8 @@ public class KeyBoard : MonoBehaviour {
     {
         PlayerPrefs.SetInt("currentGame", 7);       // set the current game to the appropriate scene, this will be used to pass throug
         PlayerPrefs.Save();
+        //Assigns an audio source	
+        playAud = gameObject.AddComponent<AudioSource>();
     }
 	//Runs at Startup
 	void Start()
@@ -76,7 +78,7 @@ public class KeyBoard : MonoBehaviour {
 
     public void loadMenu()
     {
-        SceneManager.LoadScene(11);
+        SceneManager.LoadScene(0);
 
     }
 
@@ -95,20 +97,20 @@ public class KeyBoard : MonoBehaviour {
 			playSound(wordSounds [ranDisplay],0.8f);
 			b2=false;
 		}
-		//Checks if user wants to skip
-		/*if (b1 == true) {
+        //Checks if user wants to skip
+        /*if (b1 == true) {
 			//score++;
 			//rounds++;
 			b1=false;
 			SetRandom();
 		}*/
 
-		//b1 = GUI.Button (new Rect (480, 300, 75, 50), skip);
-		
-		int buttonSizeWidth = 60;
-		int buttonSizeHeight = 75;
-		int buttonSpacing = 3;
-		int xOffset = Screen.width/6;
+        //b1 = GUI.Button (new Rect (480, 300, 75, 50), skip);
+
+        int buttonSizeWidth = Screen.width / 14;
+        float buttonSizeHeight = Screen.height / 8.5f;
+        int buttonSpacing = Screen.width/110;
+		int xOffset = Screen.width/30;
 		int yOffset = Screen.height/2;
 		int numCols = 12;
 		int InDeX = 0;
@@ -140,7 +142,7 @@ public class KeyBoard : MonoBehaviour {
         //Creates Image to match
        // GUI.DrawTexture (new Rect (Screen.width/2.5f, 10, 200, 200), display [ranDisplay], ScaleMode.ScaleToFit, true, 1.0F);
 		//Creates surrounding border
-		GUI.DrawTexture (new Rect (Screen.width/2.5f, 10, 200, 200), border, ScaleMode.ScaleToFit, true, 1.0F);
+		GUI.DrawTexture (new Rect (Screen.width / 2.7f, Screen.height / 15, Screen.width / 4.0f, Screen.height / 2.8f), border, ScaleMode.StretchToFill, true, 1.0F);
 		//*****************************************************************************************
 		Rect r = new Rect (0, 0, buttonSizeWidth, buttonSizeHeight); // rect for picture cues
 		Rect r2 = new Rect (0, 0, buttonSizeWidth, buttonSizeHeight);
@@ -158,8 +160,8 @@ public class KeyBoard : MonoBehaviour {
 			}
 			if (i > 21) {
 				numCols = 8;
-				r.x = xOffset + (i % numCols) * (buttonSizeWidth + buttonSpacing);
-				r.y = yOffset + (int)Mathf.Floor ((float)i / numCols) * (buttonSizeHeight + buttonSpacing);
+                r.x = xOffset + (i % numCols) * (buttonSizeWidth + buttonSpacing) + Screen.width / 36;
+                r.y = yOffset + (int)Mathf.Floor ((float)i / numCols) * (buttonSizeHeight + buttonSpacing);
 			}
 			//Texture currTexture = pictureLetters[i];
 			
@@ -174,7 +176,7 @@ public class KeyBoard : MonoBehaviour {
 				r2.y = yOffset + (int)Mathf.Floor ((float)i / 10) * (buttonSizeHeight + buttonSpacing);
 			}
 			if (i > 19 && i < 26) {
-				r2.x = (xOffset + 58) + (i % 9) * (buttonSizeWidth + buttonSpacing);
+                r2.x = (xOffset + 58) + (i % 9) * (buttonSizeWidth + buttonSpacing) + Screen.width / 36;
 				r2.y = yOffset + (int)Mathf.Floor ((float)i / 9) * (buttonSizeHeight + buttonSpacing);
 			}
 			if (picKeyBoard == true && InDeX < 26) {
@@ -224,7 +226,7 @@ public class KeyBoard : MonoBehaviour {
             imageSkin.button.normal.background = buttonCorrect;
             StartCoroutine(waitForSeconds(1.5f));
         }
-        b2 = GUI.Button(new Rect(Screen.width / 2.5f, 10, 200, 200), replay);
+        b2 = GUI.Button(new Rect(Screen.width / 2.7f, Screen.height / 15, Screen.width / 4.0f, Screen.height / 2.8f), replay);
     }
 
     IEnumerator waitForSeconds(float sec)
@@ -253,13 +255,16 @@ public class KeyBoard : MonoBehaviour {
 	//Plays Sounds
 	void playSound(AudioClip sound, float vol)
 	{
-		//Assigns an audio source	
-		playAud = gameObject.AddComponent<AudioSource> ();
 		
+        if (playAud.isPlaying)
+        {
+            playAud.Stop();
+        }
 		//Assigns Clip and Volume then plays sound
 		playAud.clip = sound;
 		playAud.volume = vol;
-		playAud.Play();
+        playAud.Play();
+       
 	}
 
 	// Update is called once per frame
