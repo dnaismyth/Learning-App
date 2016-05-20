@@ -26,14 +26,9 @@ public class ButtonScroll : MonoBehaviour
             PlayerPrefs.SetInt("vowel_letter" + j, j);
         }
         for(int k = 0; k <= 11; k++)
-        {
-
+        { 
             PlayerPrefs.SetInt("final_letter" + k, k);
-          
         }
-        /*Vector3 temp = this.transform.position;
-        temp.y = -3;
-        buttons.transform.position = temp;*/
         initialPosition = buttons.transform.position;
         createButtons();
         PlayerPrefs.Save();

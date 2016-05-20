@@ -102,60 +102,6 @@ public class initialsound_settings : MonoBehaviour {
 
         }
 
-    private void finalLetterAppearance(List<initialSounds_settingsMouse> avail)
-    {
-        int index = 0;
-        int finalId = 0;
-        if (index == 0)
-        {
-            finalId = 1;
-        }
-        else if (index == 1)
-        {
-            finalId = 2;
-        }
-        else if (index == 2)
-        {
-            finalId = 5;
-        }
-        else if (index == 3)
-        {
-            finalId = 6;
-        }
-        else if (index == 4)
-        {
-            finalId = 11;
-        }
-        else if (index == 5)
-        {
-            finalId = 13;
-        }
-        else if (index == 6)
-        {
-            finalId = 17;
-        }
-        else if (index == 7)
-        {
-            finalId = 18;
-        }
-        else if (index == 8)
-        {
-            finalId = 19;
-        }
-        else if (index == 9)
-        {
-            finalId = 23;
-        }
-        else if (index == 10)
-        {
-            finalId = 12;
-        }
-        else if (index == 11)
-        {
-            finalId = 3;
-        }
-    }
-
 
 
 
@@ -214,57 +160,8 @@ public class initialsound_settings : MonoBehaviour {
         Vector3 startPos = new Vector3(-3, originalCard.transform.position.y, originalCard.transform.position.z); // position of the first card, all cards will be offset from here
 
         int index = 0;
-        int finalId = 0;
         for (int i = 0; i < finalLetters.Length; i++)
         {
-            if (index == 0)
-            {
-                finalId = 1;
-            }
-            else if (index == 1)
-            {
-                finalId = 2;
-            }
-            else if (index == 2)
-            {
-                finalId = 5;
-            }
-            else if (index == 3)
-            {
-                finalId = 6;
-            }
-            else if (index == 4)
-            {
-                finalId = 11;
-            }
-            else if (index == 5)
-            {
-                finalId = 13;
-            }
-            else if (index == 6)
-            {
-                finalId = 17;
-            }
-            else if (index == 7)
-            {
-                finalId = 18;
-            }
-            else if (index == 8)
-            {
-                finalId = 19;
-            }
-            else if (index == 9)
-            {
-                finalId = 23;
-            }
-            else if (index == 10)
-            {
-                finalId = 12;
-            }
-            else if (index == 11)
-            {
-               finalId = 3;
-            }
 
 
             if (i == 0)
@@ -278,7 +175,7 @@ public class initialsound_settings : MonoBehaviour {
 
 
             //setLetter from the settingsMouse class, using the sprites provides and creating an id based on the i-iteration
-            letter.setLetter(finalLetters[index], finalId, finalLetters[index].name);
+            letter.setLetter(finalLetters[index], i, finalLetters[index].name);
             allLetterChoices.Add(letter);
                                     //print("My Curr Choices: " + theseLetters[i]);
 
@@ -304,7 +201,7 @@ public class initialsound_settings : MonoBehaviour {
     public void createVowels()
     {
 
-        Vector3 startPos = new Vector3(-3, originalCard.transform.position.y, originalCard.transform.position.z); // position of the first card, all cards will be offset from here
+        Vector3 startPos = new Vector3(-2.5f, originalCard.transform.position.y, originalCard.transform.position.z); // position of the first card, all cards will be offset from here
 
         int index = 0;
         for (int i = 0; i < vowelLetters.Length; i++)

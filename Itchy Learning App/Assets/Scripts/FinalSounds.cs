@@ -108,26 +108,23 @@ public class FinalSounds: MonoBehaviour {
 
     void Awake()
     {
-        for (int i = 0; i <= 11; i++)
-        {
-            Debug.Log(PlayerPrefs.GetInt("final_letter" + i));
-        }
+        Debug.Log("Height: " + Screen.height);
+        Debug.Log("Width: " + Screen.width);
         //Assigns an audio source	
         playAud = gameObject.AddComponent<AudioSource>();
         PlayerPrefs.SetInt("currentGame", 5);       // set the current game to the appropriate scene, this will be used to pass throug
         PlayerPrefs.Save();                                           // to the letters option
-        Debug.Log("Checking letters final sounds: " + PlayerPrefs.GetInt("final_letter1"));
-        Debug.Log("final_letter" + 1);
+
         initializeUsable();
     }
 
     void initializeUsable()
     {
         //Debug current letters player has picked
-        for (int i = 0; i <= 25; i++)
+        for (int i = 0; i <= 11; i++)
         {
             int letterId = PlayerPrefs.GetInt("final_letter" + i);
-
+            Debug.Log("This is my letter id: " + letterId);
             if (letterId != -1)
             {
                 usable[letterId] = true;
@@ -165,15 +162,15 @@ public class FinalSounds: MonoBehaviour {
 
         //Option Buttons b1-b4
         if (itchyMode == true) {
-			b1 = GUI.Button (new Rect (Screen.width / 4.1f, Screen.height / 10, 150, 150), pictureLetters[letterOptions[0]]);
-			b2 = GUI.Button (new Rect (Screen.width / 1.6f, Screen.height / 10, 150, 150), pictureLetters[letterOptions[1]]);
-			b3 = GUI.Button (new Rect (Screen.width / 4.1f, Screen.height / 1.5f, 150, 150), pictureLetters[letterOptions[2]]);
-			b4 = GUI.Button (new Rect (Screen.width / 1.6f, Screen.height / 1.5f, 150, 150), pictureLetters[letterOptions[3]]);
+			b1 = GUI.Button (new Rect (Screen.width / 4.1f, Screen.height / 10, Screen.width / 7, Screen.height / 4.5f), pictureLetters[letterOptions[0]]);
+			b2 = GUI.Button (new Rect (Screen.width / 1.6f, Screen.height / 10, Screen.width / 7, Screen.height / 4.5f), pictureLetters[letterOptions[1]]);
+			b3 = GUI.Button (new Rect (Screen.width / 4.1f, Screen.height / 1.5f, Screen.width / 7, Screen.height / 4.5f), pictureLetters[letterOptions[2]]);
+			b4 = GUI.Button (new Rect (Screen.width / 1.6f, Screen.height / 1.5f, Screen.width / 7, Screen.height / 4.5f), pictureLetters[letterOptions[3]]);
 		} else {
-			b1 = GUI.Button (new Rect (Screen.width / 4.1f, Screen.height / 10, 150, 150), fontLetters[letterOptions[0]]);
-			b2 = GUI.Button (new Rect (Screen.width / 1.6f, Screen.height / 10, 150, 150), fontLetters[letterOptions[1]]);
-			b3 = GUI.Button (new Rect (Screen.width / 4.1f, Screen.height / 1.5f, 150, 150), fontLetters[letterOptions[2]]);
-			b4 = GUI.Button (new Rect (Screen.width / 1.6f, Screen.height / 1.5f, 150, 150), fontLetters[letterOptions[3]]);
+			b1 = GUI.Button (new Rect (Screen.width / 4.1f, Screen.height / 10, Screen.width / 7, Screen.height / 4.5f), fontLetters[letterOptions[0]]);
+			b2 = GUI.Button (new Rect (Screen.width / 1.6f, Screen.height / 10, Screen.width / 7, Screen.height / 4.5f), fontLetters[letterOptions[1]]);
+			b3 = GUI.Button (new Rect (Screen.width / 4.1f, Screen.height / 1.5f, Screen.width / 7, Screen.height / 4.5f), fontLetters[letterOptions[2]]);
+			b4 = GUI.Button (new Rect (Screen.width / 1.6f, Screen.height / 1.5f, Screen.width / 7, Screen.height / 4.5f), fontLetters[letterOptions[3]]);
 		}
 
         //b5 = GUI.Button (new Rect (520, 320, 75, 50), skip);
@@ -190,11 +187,11 @@ public class FinalSounds: MonoBehaviour {
             imageSkin.button.normal.background = buttonCorrect;
             StartCoroutine(waitForSeconds(1.5f));
         }
-        b6 = GUI.Button(new Rect(Screen.width / 2.4f, Screen.height / 2.9f, 200, 200), replay);
+        b6 = GUI.Button(new Rect(Screen.width / 2.5f, Screen.height / 2.99f, Screen.width / 4.6f, Screen.height / 3), replay);
 
         //GUI.DrawTexture(new Rect(Screen.width/2.5f, Screen.height/3.5f, 200, 200), temp, ScaleMode.ScaleToFit, true, 1.0F);
         //Creates surrounding border
-        GUI.DrawTexture(new Rect(Screen.width / 2.4f, Screen.height / 2.9f, 200, 200), border, ScaleMode.StretchToFill, true, 1.0F);
+        GUI.DrawTexture(new Rect(Screen.width / 2.5f, Screen.height / 2.99f, Screen.width / 4.6f, Screen.height / 3), border, ScaleMode.StretchToFill, true, 1.0F);
     }
 
 
@@ -209,59 +206,16 @@ public class FinalSounds: MonoBehaviour {
     //Sets Random Location in Word List for the selected word
     void SetRandom()
 	{
-		prev = ranDisplay;
-		ranDisplay = Random.Range (0, 72);
+        prev = ranDisplay;
+        ranDisplay = Random.Range(0, 72);
+        if(ranDisplay == prev)
+        {
+            ranDisplay = Random.Range(0, 72);   // new random if it is equivalent to previous 
+        }
+        
 		//index (0-25) of alphabet
 		indeX = ranDisplay % 12;
-        
-            if (indeX == 0)
-            {
-                indeX = 1;
-            }
-            else if (indeX == 1)
-            {
-                indeX = 2;
-            }
-            else if (indeX == 2)
-            {
-                indeX = 5;
-            }
-            else if (indeX == 3)
-            {
-                indeX = 6;
-            }
-            else if (indeX == 4)
-            {
-                indeX = 11;
-            }
-            else if (indeX == 5)
-            {
-                indeX = 13;
-            }
-            else if (indeX == 6)
-            {
-                indeX = 17;
-            }
-            else if (indeX == 7)
-            {
-                indeX = 18;
-            }
-            else if (indeX == 8)
-            {
-                indeX = 19;
-            }
-            else if (indeX == 9)
-            {
-                indeX = 23;
-            }
-            else if (indeX == 10)
-            {
-                indeX = 12;
-            }
-            else if (indeX == 11)
-            {
-                indeX = 3;
-            }
+        Debug.Log("My index is: " + indeX);
         
 		//Checks if valid
 		if (usable [indeX] == false) {
@@ -362,7 +316,7 @@ public class FinalSounds: MonoBehaviour {
 		//Calls response to indicate if the button chosen results in true or false answers
 		response (buttonClicked);
 		//Plays the sound of the chosen letter
-		playSound(letterSounds [letterOptions [buttonClicked - 1]],0.8f, 2);
+		playSound(letterSounds [letterOptions [buttonClicked-1]],0.8f, 2);
 	}
 	
 	/*Checks if audio is playing and stops it, then indicates with the respons value if 
@@ -372,7 +326,7 @@ public class FinalSounds: MonoBehaviour {
 		if (playAud.isPlaying)
 			playAud.Stop ();
 		
-		if (letterOptions [buttonClicked - 1] == indeX) {
+		if (letterOptions [buttonClicked-1] == indeX) {
             isRight = true;
             congrat = 1;
 			respons = true;

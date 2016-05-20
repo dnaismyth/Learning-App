@@ -288,8 +288,11 @@ public class InitialSounds: MonoBehaviour {
 	{
         createPercent();
         prev = ranDisplay;
-       
         ranDisplay = UnityEngine.Random.Range(0, 52);
+        if(ranDisplay == prev)
+        {
+            ranDisplay = UnityEngine.Random.Range(0, 52);   // redraw a number if it is equivalent to the one previously played
+        }
        
 		//index (0-25) of alphabet
 		indeX = ranDisplay % 2;

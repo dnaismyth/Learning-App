@@ -229,6 +229,10 @@ public class VowelSounds: MonoBehaviour {
 	{
 		prev = ranDisplay;
 		ranDisplay = Random.Range (0, 50);
+        if(ranDisplay == prev)
+        {
+            ranDisplay = Random.Range(0, 50);   // redraw a number if it is equivalent to the one previously played
+        }
 		//index (0-5) of vowels
 		indeX = ranDisplay % 5;
 		
